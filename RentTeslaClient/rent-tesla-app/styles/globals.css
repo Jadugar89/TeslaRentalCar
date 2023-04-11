@@ -1,0 +1,35 @@
+.container-header{
+ width: 100%;
+}
+.nav {
+  display: flex;
+  align-items: center;
+  background-color:darkblue;
+  padding: 10px 15px;
+}
+.nav-text, .nav-link {
+  margin: 0;
+}
+
+.nav-text {
+  margin-right: auto;
+  color: white;
+  font-weight: 700;
+  font-size: 22px;
+}
+
+.nav-link {
+  color: #DEEBF8;
+  font-weight: 600;
+}
+
+.footer{
+  position: relative;
+  bottom: 0px;
+  margin-bottom: 5px;
+  width: 100%;
+  color: #333;
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+}
