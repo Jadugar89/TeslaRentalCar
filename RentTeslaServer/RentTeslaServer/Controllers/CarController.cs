@@ -6,7 +6,7 @@ using RentTeslaServer.Services;
 
 namespace RentTeslaServer.Controllers
 {
-    [Route("api/carrental/{carrentalName}/car")]
+    [Route("api/")]
     [ApiController]
     public class CarController : ControllerBase
     {
@@ -17,18 +17,24 @@ namespace RentTeslaServer.Controllers
             this.carService = carService;
         }
         // GET: api/<CarController>
-        [HttpGet]
+        [HttpGet("carrental/{carrentalName}/car")]
         public async Task<IActionResult> GetCars([FromRoute] string carrentalName, [FromQuery] SearchDataDto searchDataDto)
         {
-           var result= await carService.GetAllCars(searchDataDto);
+           var result= await carService.GetAllCarsInDataRange(searchDataDto);
             return Ok(result);  
         }
-
-        // GET api/<CarController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("car")]
+        public async Task<IActionResult> GetCars()
         {
-            return "value";
+            var result = await carService.GetAllCars();
+            return Ok(result);
+        }
+
+        [HttpGet("car/{id}")]
+        public async Task<IActionResult> Get(int id)
+        {
+            var result = await carService.GetById(id);
+            return Ok(result);
         }
 
         // POST api/<CarController>

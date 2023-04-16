@@ -41,7 +41,7 @@ namespace RentTeslaServerTests
         [MemberData(nameof(ReservationData))]
         public async Task GetCars(SearchDataDto searchDataDto)
         {
-            var cars = await carService.GetAllCars(searchDataDto);
+            var cars = await carService.GetAllCarsInDataRange(searchDataDto);
             Assert.True(cars.Count()==4);
 
         }

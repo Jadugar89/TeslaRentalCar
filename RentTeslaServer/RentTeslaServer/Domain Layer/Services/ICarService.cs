@@ -4,6 +4,8 @@ namespace RentTeslaServer.Services
 {
     public interface ICarService
     {
-        Task<IEnumerable<CarDto>> GetAllCars(SearchDataDto searchDataDto);
+        Task<IEnumerable<CarManagmentDto>> GetAllCars();
+        Task<IEnumerable<CarDto>> GetAllCarsInDataRange(SearchDataDto searchDataDto);
+        Task<CarManagmentDetailDto> GetById(int Id);
     }
 }
