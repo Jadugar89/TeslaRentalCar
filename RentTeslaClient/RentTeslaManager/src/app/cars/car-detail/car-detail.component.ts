@@ -12,15 +12,16 @@ import { CarService } from '../car.service';
 export class CarDetailComponent implements OnInit {
   carDetail={} as ICarDetail;
   carForm = this.fb.group({
+    id: 0,
     isPrepared: [false],
     isFree: [false],
     dailyPrice: [0, Validators.required],
     plates: ['', Validators.required],
     carTypeDto: this.fb.group({
-      name: ['', Validators.required],
-      motor: ['', Validators.required],
-      range: [0, Validators.required],
-      seats: [0, Validators.required]
+      name: [{ value: '', disabled:true}, Validators.required],
+      motor:[{value: '', disabled:true}, Validators.required],
+      range:[{ value: 0, disabled:true},  Validators.required],
+      seats: [{ value: 0, disabled:true}, Validators.required]
     }),
     carRentalDto: this.fb.group({
       name: ['', Validators.required],
@@ -46,6 +47,7 @@ export class CarDetailComponent implements OnInit {
         console.log(carDetail);
        this.carForm.patchValue(
         {
+          id: carDetail.id,
           isPrepared: carDetail.isPrepared,
           isFree: carDetail.isFree,
           dailyPrice: carDetail.dailyPrice ,
@@ -72,6 +74,7 @@ export class CarDetailComponent implements OnInit {
 
   onSubmit() {
     console.log(this.carForm.value);
-    // Do something with the car object
+    this.carDetail = this.carForm.value as ICarDetail;
+    
   }
 }
