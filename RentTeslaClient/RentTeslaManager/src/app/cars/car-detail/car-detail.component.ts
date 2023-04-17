@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { ICarDetail } from '../Interface';
+import { ICarDetail, ICarType } from '../../shared/interface';
 import { CarService } from '../car.service';
+import { CarTypeService } from '../../shared/car-type.service';
 
 @Component({
   selector: 'app-car-detail',
@@ -11,6 +12,7 @@ import { CarService } from '../car.service';
 })
 export class CarDetailComponent implements OnInit {
   carDetail={} as ICarDetail;
+  carTypes: ICarType[]=[];
   carForm = this.fb.group({
     id: 0,
     isPrepared: [false],
@@ -18,7 +20,7 @@ export class CarDetailComponent implements OnInit {
     dailyPrice: [0, Validators.required],
     plates: ['', Validators.required],
     carTypeDto: this.fb.group({
-      name: [{ value: '', disabled:true}, Validators.required],
+      name: [ '', Validators.required],
       motor:[{value: '', disabled:true}, Validators.required],
       range:[{ value: 0, disabled:true},  Validators.required],
       seats: [{ value: 0, disabled:true}, Validators.required]
@@ -34,6 +36,7 @@ export class CarDetailComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, 
               private carService: CarService,
+              private carTypesService: CarTypeService,
               private fb: FormBuilder) {
                 console.log("CarDetailComponent")
               }
@@ -42,10 +45,45 @@ export class CarDetailComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id');
     if(id){
       this.carService.getCar(+id).subscribe((car: ICarDetail) => {
-        let carDetail = car;
+        this.UpdateForm(car);
+      });
+      this.carTypesService.getCarTypes().subscribe((carTypes:ICarType[])=>{
+          this.carTypes=carTypes;
+      })
+    }
+
+  }
+
+
+  onSubmit() {
+    console.log(this.carForm.value);
+    this.carDetail = this.carForm.value as ICarDetail;
+    
+  }
+  onCarTypeChange(newValue:any)
+  {
+    if(newValue.target.value)
+    {
+      const selectedCarType = this.carTypes.find(carType => carType.name === newValue.target.value);
+      if(selectedCarType)
+      {
+        this.carForm.patchValue({
+          carTypeDto: {
+            motor: selectedCarType.motor,
+            range: selectedCarType.range,
+            seats: selectedCarType.seats,
+          },
+        })
+      }
+    }
+  }
+
+  private UpdateForm(car:ICarDetail)
+  {
+    let carDetail = car;
         this.carDetail=car;
         console.log(carDetail);
-       this.carForm.patchValue(
+        this.carForm.patchValue(
         {
           id: carDetail.id,
           isPrepared: carDetail.isPrepared,
@@ -65,16 +103,5 @@ export class CarDetailComponent implements OnInit {
             postalCode: carDetail.carRentalDto.postalCode,
           }
         })
-        
-      });
-    }
-
-  }
-
-
-  onSubmit() {
-    console.log(this.carForm.value);
-    this.carDetail = this.carForm.value as ICarDetail;
-    
   }
 }

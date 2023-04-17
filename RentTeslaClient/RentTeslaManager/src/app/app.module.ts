@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { HeaderComponent } from './header/header.component';
 import { NavigationComponent } from './navigation/navigation.component';
+import { SharedModule } from './shared/shared.module';
 
 
 @NgModule({
@@ -17,8 +18,9 @@ import { NavigationComponent } from './navigation/navigation.component';
   ],
   imports: [
     BrowserModule,
-    CarsModule,
     HttpClientModule,
+    CarsModule,
+    SharedModule,
     AppRoutingModule,
   ],
 

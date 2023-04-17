@@ -6,14 +6,14 @@ export interface ICar {
     carRentalCity:string;
   }
 
-  interface ICarType {
+  export interface ICarType {
     name: string;
     motor: string;
     range: number;
     seats: number;
   }
   
-  interface ICarRental {
+  export interface ICarRental {
     name: string;
     city: string;
     street: string;

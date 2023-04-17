@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
-import { ICar, ICarDetail } from './Interface';
+import { ICar, ICarDetail } from '../shared/interface';
 
 
 @Injectable({

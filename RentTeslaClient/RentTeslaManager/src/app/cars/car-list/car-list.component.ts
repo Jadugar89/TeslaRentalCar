@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ICar } from '../Interface';
+import { ICar } from '../../shared/interface';
 
 @Component({
   selector: 'app-car-list',
