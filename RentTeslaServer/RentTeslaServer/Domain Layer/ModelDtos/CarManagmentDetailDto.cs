@@ -10,7 +10,7 @@ namespace RentTeslaServer.Domain_Layer.ModelDtos
         public bool IsFree { get; set; }
         public double DailyPrice { get; set; }
         public string Plates { get; set; }
-        public CarTypeDto carTypeDto { get; set; }
+        public CarTypeDto CarTypeDto { get; set; }
         public CarRentalDto CarRentalDto { get; set; }
     }
 }

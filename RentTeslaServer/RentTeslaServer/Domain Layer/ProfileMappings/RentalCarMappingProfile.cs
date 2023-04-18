@@ -16,14 +16,14 @@ namespace RentTeslaServer.Domain_Layer.ProfileMappings
 
             CreateMap<Car, CarManagmentDetailDto>()
                 .ForMember(m => m.CarRentalDto,x=>x.MapFrom(s => s.CarRental))
-                .ForMember(m => m.carTypeDto, x => x.MapFrom(s => s.CarType));
+                .ForMember(m => m.CarTypeDto, x => x.MapFrom(s => s.CarType));
 
+            CreateMap<CarManagmentDetailDto, Car>();
+               
+                
             CreateMap<CarDto, Car>();
             CreateMap<CarType, CarTypeDto>();
             CreateMap<CarRental, CarRentalDto>();
-
-
-           
 
             CreateMap<Car, CarManagmentDto>()
                 .ForMember(m => m.Name, c => c.MapFrom(s => s.CarType.Name))

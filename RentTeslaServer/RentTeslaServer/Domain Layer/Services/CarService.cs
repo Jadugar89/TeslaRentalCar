@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using RentTeslaServer.DataAccessLayer;
 using RentTeslaServer.DataAccessLayer.Entities;
@@ -62,6 +63,40 @@ namespace RentTeslaServer.Services
 
             var carDto = mapper.Map<CarManagmentDetailDto>(car);
             return carDto;
+        }
+        public async Task Update(int id, CarManagmentDetailDto carManagmentDetailDto)
+        {
+
+            if (id != carManagmentDetailDto.Id) throw new BadRequestException("Wrong Id");
+            var car = mapper.Map<Car>(carManagmentDetailDto);
+            var carType = await dbContext.CarTypes.FirstOrDefaultAsync(x => x.Name == carManagmentDetailDto.CarTypeDto.Name);
+            if (carType == null)
+                throw new NotFoundException("Car Type not found");
+
+            car.CarType = carType;
+            var carRental = await dbContext.CarRentals.FirstOrDefaultAsync(x => x.Name == carManagmentDetailDto.CarRentalDto.Name);
+            if (carRental == null) throw new NotFoundException("Carrental not found");
+            car.CarRental = carRental;
+
+            dbContext.Cars.Update(car);
+            dbContext.SaveChanges();
+        }
+
+        public async Task Delete(int id)
+        {
+            logger.LogError($"Restaurant with id: {id} DELETE action invoked");
+
+            var restaurant = await dbContext
+                .Cars
+                .FirstOrDefaultAsync(r => r.Id == id);
+
+            if (restaurant is null)
+                throw new NotFoundException("Car not found");
+
+
+            dbContext.Cars.Remove(restaurant);
+            dbContext.SaveChanges();
+
         }
 
     }

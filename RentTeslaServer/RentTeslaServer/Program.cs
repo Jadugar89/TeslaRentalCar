@@ -41,9 +41,8 @@ builder.Services.AddDbContext<RentTeslaDbContext>(options =>
 builder.Services.AddCors(policy =>
 {
     policy.AddPolicy("FrondEndClient", options =>
-    options.AllowAnyMethod()
-    .AllowAnyHeader()
-    .AllowAnyOrigin());
+    options.AllowAnyMethod().AllowAnyHeader().AllowCredentials()
+    .WithOrigins(builder.Configuration["AllowedOrigins"]));
 
 });
 builder.Host.UseNLog();
@@ -51,7 +50,6 @@ builder.Host.UseNLog();
 var app = builder.Build();
 
 app.UseCors("FrondEndClient");
-
 app.UseMiddleware<ErrorHandlingMiddleware>();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -61,8 +59,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
+
+
 
 app.MapControllers();
 

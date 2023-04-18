@@ -56,8 +56,17 @@ export class CarDetailComponent implements OnInit {
 
 
   onSubmit() {
-    console.log(this.carForm.value);
-    this.carDetail = this.carForm.value as ICarDetail;
+    if (this.carForm.valid) {
+      console.log(this.carForm.getRawValue() );
+    this.carDetail = this.carForm.getRawValue() as ICarDetail;
+    this.carService.updateCarDetail(this.carDetail).subscribe(response => {
+      console.log(response);
+      console.log('Car details updated successfully!');
+    }, error => {
+      console.log('Error occurred while updating car details:', error);
+    });
+
+    }
     
   }
   onCarTypeChange(newValue:any)
@@ -83,7 +92,7 @@ export class CarDetailComponent implements OnInit {
     let carDetail = car;
         this.carDetail=car;
         console.log(carDetail);
-        this.carForm.patchValue(
+        this.carForm.setValue(
         {
           id: carDetail.id,
           isPrepared: carDetail.isPrepared,

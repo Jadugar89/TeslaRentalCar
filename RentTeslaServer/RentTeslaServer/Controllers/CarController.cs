@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RentTeslaServer.Domain_Layer.ModelDtos;
 using RentTeslaServer.Services;
+using System.Reflection.Metadata.Ecma335;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -38,22 +40,27 @@ namespace RentTeslaServer.Controllers
         }
 
         // POST api/<CarController>
-        [HttpPost]
-        public void Post([FromBody] string value)
+        [HttpPost("car")]
+        public IActionResult Post([FromBody] CarManagmentDetailDto carManagmentDetailDto)
         {
-          
+            var test = carManagmentDetailDto;
+            return Ok();
         }
 
         // PUT api/<CarController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut("car/{id}")]
+        public async Task<IActionResult> Put(int id, [FromBody] CarManagmentDetailDto carManagmentDetailDto)
         {
+            await carService.Update(id, carManagmentDetailDto);
+            return NoContent();
         }
 
         // DELETE api/<CarController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("car/{id}")]
+        public async Task<IActionResult> Delete(int id)
         {
+           await carService.Delete(id);
+           return NoContent();
         }
     }
 }
