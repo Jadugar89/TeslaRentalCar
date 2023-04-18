@@ -54,9 +54,6 @@ export class CarDetailComponent implements OnInit {
     }
 
   }
-  showSuccess() {
-    this.toastr.success('Hello world!', 'Toastr fun!');
-  }
 
   onSubmit() {
     if (this.carForm.valid) {
@@ -65,9 +62,11 @@ export class CarDetailComponent implements OnInit {
     this.carService.updateCarDetail(this.carDetail).subscribe(response => {
       console.log(response);
       console.log('Car details updated successfully!');
-      this.showSuccess();
+      this.toastr.success('Car details updated successfully', 'Update');
+     
     }, error => {
       console.log('Error occurred while updating car details:', error);
+      this.toastr.error('Error occurred while updating car details:', 'Update');
     });
 
     }

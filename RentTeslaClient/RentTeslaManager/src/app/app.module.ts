@@ -9,6 +9,7 @@ import { HeaderComponent } from './header/header.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { SharedModule } from './shared/shared.module';
 import { ToastrModule } from 'ngx-toastr';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import { ToastrModule } from 'ngx-toastr';
     SharedModule,
     ToastrModule.forRoot(),
     AppRoutingModule,
+    NgbModule,
     
   ],
 
