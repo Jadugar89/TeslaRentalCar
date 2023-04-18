@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import { ICar, ICarDetail } from '../shared/interface';
-import { errorHandlingConfig } from 'angular';
 
 
 @Injectable({
@@ -30,7 +29,7 @@ export class CarService {
             })
           )}
 
-    getCar(id: number) : Observable<ICarDetail> {
+          getCar(id: number) : Observable<ICarDetail> {
             return this.http.get<ICarDetail>(this.baseUrl +id)
               .pipe(
             catchError(err => {
@@ -46,7 +45,7 @@ export class CarService {
               console.log('caught mapping error and rethrowing', err);
               return throwError(()=>err);
               })
-          )}   
+            )}   
           createCarDetail(carDetail: ICarDetail): Observable<ICarDetail>{
             return this.http.post<ICarDetail>(this.baseUrl, carDetail,this.httpOptions)
             .pipe(
@@ -54,6 +53,11 @@ export class CarService {
               console.log('caught mapping error and rethrowing', err);
               return throwError(()=>err);
               })
-          )}
+            )}
+
+            deleteCar(id: number) {
+              return this.http.delete(this.baseUrl+id);
+            }
+
           
 }

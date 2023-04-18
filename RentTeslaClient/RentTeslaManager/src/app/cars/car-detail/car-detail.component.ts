@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ICarDetail, ICarType } from '../../shared/interface';
 import { CarService } from '../car.service';
 import { CarTypeService } from '../../shared/car-type.service';
@@ -39,9 +39,9 @@ export class CarDetailComponent implements OnInit {
               private carService: CarService,
               private carTypesService: CarTypeService,
               private toastr: ToastrService,
-              private fb: FormBuilder) {
-                console.log("CarDetailComponent")
-              }
+              private router:Router,
+              private fb: FormBuilder) {}
+
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
     if(id){
@@ -52,26 +52,33 @@ export class CarDetailComponent implements OnInit {
           this.carTypes=carTypes;
       })
     }
-
   }
 
   onSubmit() {
     if (this.carForm.valid) {
       console.log(this.carForm.getRawValue() );
-    this.carDetail = this.carForm.getRawValue() as ICarDetail;
-    this.carService.updateCarDetail(this.carDetail).subscribe(response => {
-      console.log(response);
-      console.log('Car details updated successfully!');
-      this.toastr.success('Car details updated successfully', 'Update');
-     
-    }, error => {
-      console.log('Error occurred while updating car details:', error);
-      this.toastr.error('Error occurred while updating car details:', 'Update');
-    });
-
+      this.carDetail = this.carForm.getRawValue() as ICarDetail;
+      this.carService.updateCarDetail(this.carDetail).subscribe(response => {
+        console.log(response);
+        console.log('Car details updated successfully!');
+        this.toastr.success('Car details updated successfully', 'Update');
+      }, error => {
+        console.log('Error occurred while updating car details:', error);
+        this.toastr.error('Error occurred while updating car details:', 'Update');
+      });
     }
-    
   }
+  
+  onDelete(){
+    this.carService.deleteCar(this.carDetail.id).subscribe(response => {
+      this.toastr.success('Car deleted successfully', 'Delete');
+      this.router.navigate(['/cars']);
+    },error=>{
+      console.log('Error occurred while delete car:', error);
+      this.toastr.error('Error occurred while delete car:', 'delete');
+    });
+  }
+
   onCarTypeChange(newValue:any)
   {
     if(newValue.target.value)

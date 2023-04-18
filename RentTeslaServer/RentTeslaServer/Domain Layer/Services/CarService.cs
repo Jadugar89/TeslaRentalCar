@@ -47,7 +47,10 @@ namespace RentTeslaServer.Services
 
         public async Task<IEnumerable<CarManagmentDto>> GetAllCars()
         {
-            var cars = await dbContext.Cars.Include(x => x.CarType).Include(x => x.CarRental).ToListAsync();
+            var cars = await dbContext.Cars.Include(x => x.CarType)
+                .Include(x => x.CarRental)
+                .AsNoTracking()
+                .ToListAsync();
             var carsDto = mapper.Map<List<CarManagmentDto>>(cars);
             return carsDto;
         }
@@ -57,6 +60,7 @@ namespace RentTeslaServer.Services
             var car = await dbContext.Cars
                 .Include(x => x.CarType)
                 .Include(x => x.CarRental)
+                .AsNoTracking()
                 .FirstOrDefaultAsync(x => x.Id == Id);
             if (car == null)
                 throw new NotFoundException("Car with this Id not exist");
@@ -84,17 +88,17 @@ namespace RentTeslaServer.Services
 
         public async Task Delete(int id)
         {
-            logger.LogError($"Restaurant with id: {id} DELETE action invoked");
+            logger.LogError($"Car with id: {id} DELETE action invoked");
 
-            var restaurant = await dbContext
+            var car = await dbContext
                 .Cars
                 .FirstOrDefaultAsync(r => r.Id == id);
 
-            if (restaurant is null)
+            if (car is null)
                 throw new NotFoundException("Car not found");
 
 
-            dbContext.Cars.Remove(restaurant);
+            dbContext.Cars.Remove(car);
             dbContext.SaveChanges();
 
         }
