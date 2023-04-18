@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ICarDetail, ICarType } from '../../shared/interface';
 import { CarService } from '../car.service';
 import { CarTypeService } from '../../shared/car-type.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-car-detail',
@@ -37,10 +38,10 @@ export class CarDetailComponent implements OnInit {
   constructor(private route: ActivatedRoute, 
               private carService: CarService,
               private carTypesService: CarTypeService,
+              private toastr: ToastrService,
               private fb: FormBuilder) {
                 console.log("CarDetailComponent")
               }
-
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
     if(id){
@@ -53,7 +54,9 @@ export class CarDetailComponent implements OnInit {
     }
 
   }
-
+  showSuccess() {
+    this.toastr.success('Hello world!', 'Toastr fun!');
+  }
 
   onSubmit() {
     if (this.carForm.valid) {
@@ -62,6 +65,7 @@ export class CarDetailComponent implements OnInit {
     this.carService.updateCarDetail(this.carDetail).subscribe(response => {
       console.log(response);
       console.log('Car details updated successfully!');
+      this.showSuccess();
     }, error => {
       console.log('Error occurred while updating car details:', error);
     });
