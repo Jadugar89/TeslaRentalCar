@@ -7,6 +7,7 @@ export interface ICar {
   }
 
   export interface ICarType {
+    id: number;
     name: string;
     motor: string;
     range: number;
@@ -14,6 +15,7 @@ export interface ICar {
   }
   
   export interface ICarRental {
+    id: number;
     name: string;
     city: string;
     street: string;

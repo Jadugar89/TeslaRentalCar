@@ -1,7 +1,10 @@
-﻿namespace RentTeslaServer.Services
+﻿using RentTeslaServer.Domain_Layer.ModelDtos;
+
+namespace RentTeslaServer.Services
 {
     public interface IRentalCarService
     {
-        Task<IEnumerable<string>> SearchLocalization(string Name);
+        Task<IEnumerable<CarRentalDto>> GetAll();
+        Task<IEnumerable<string>> SearchLocalization(string name);
     }
 }

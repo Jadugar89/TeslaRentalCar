@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CarTypeService } from './car-type.service';
+import { CarTypeService } from './cartype.service';
+import { CarrentalService } from './carrental.service';
 
 
 
@@ -9,6 +10,6 @@ import { CarTypeService } from './car-type.service';
   imports: [
     CommonModule
   ],
-  providers:[CarTypeService]
+  providers:[CarTypeService,CarrentalService]
 })
 export class SharedModule { }

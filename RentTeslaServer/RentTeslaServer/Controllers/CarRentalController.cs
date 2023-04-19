@@ -24,7 +24,12 @@ namespace RentTeslaServer.Controllers
             var result = await rentalCarService.SearchLocalization(name);
             return Ok(result);
         }
-
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var result = await rentalCarService.GetAll();
+            return Ok(result);
+        }
 
         // POST api/<CarRentalController>
         [HttpPost]

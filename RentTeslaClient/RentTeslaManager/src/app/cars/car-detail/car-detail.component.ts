@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder,Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ICarDetail, ICarType } from '../../shared/interface';
+import { ICarDetail, ICarRental, ICarType } from '../../shared/interface';
 import { CarService } from '../car.service';
-import { CarTypeService } from '../../shared/car-type.service';
+import { CarTypeService } from '../../shared/cartype.service';
 import { ToastrService } from 'ngx-toastr';
+import { CarrentalService } from 'src/app/shared/carrental.service';
 
 @Component({
   selector: 'app-car-detail',
@@ -14,6 +15,8 @@ import { ToastrService } from 'ngx-toastr';
 export class CarDetailComponent implements OnInit {
   carDetail={} as ICarDetail;
   carTypes: ICarType[]=[];
+  carRentals: ICarRental[]=[];
+
   carForm = this.fb.group({
     id: 0,
     isPrepared: [false],
@@ -21,16 +24,18 @@ export class CarDetailComponent implements OnInit {
     dailyPrice: [0, Validators.required],
     plates: ['', Validators.required],
     carTypeDto: this.fb.group({
+      id: 0,
       name: [ '', Validators.required],
       motor:[{value: '', disabled:true}, Validators.required],
       range:[{ value: 0, disabled:true},  Validators.required],
       seats: [{ value: 0, disabled:true}, Validators.required]
     }),
     carRentalDto: this.fb.group({
+      id: 0,
       name: ['', Validators.required],
-      city: ['', Validators.required],
-      street: ['', Validators.required],
-      postalCode: ['', Validators.required]
+      city: [{value: '', disabled:true}, Validators.required],
+      street: [{value: '', disabled:true}, Validators.required],
+      postalCode: [{value: '', disabled:true}, Validators.required]
     })
   });
  
@@ -38,6 +43,7 @@ export class CarDetailComponent implements OnInit {
   constructor(private route: ActivatedRoute, 
               private carService: CarService,
               private carTypesService: CarTypeService,
+              private carRentalService: CarrentalService,
               private toastr: ToastrService,
               private router:Router,
               private fb: FormBuilder) {}
@@ -48,15 +54,19 @@ export class CarDetailComponent implements OnInit {
       this.carService.getCar(+id).subscribe((car: ICarDetail) => {
         this.UpdateForm(car);
       });
+
       this.carTypesService.getCarTypes().subscribe((carTypes:ICarType[])=>{
           this.carTypes=carTypes;
       })
+
+      this.carRentalService.getCarRentals().subscribe((carRentals:ICarRental[])=>{
+        this.carRentals=carRentals;
+    })
     }
   }
 
   onSubmit() {
     if (this.carForm.valid) {
-      console.log(this.carForm.getRawValue() );
       this.carDetail = this.carForm.getRawValue() as ICarDetail;
       this.carService.updateCarDetail(this.carDetail).subscribe(response => {
         console.log(response);
@@ -97,6 +107,24 @@ export class CarDetailComponent implements OnInit {
     }
   }
 
+  onCarRentalChange(newValue:any)
+  {
+    if(newValue.target.value)
+    {
+      const selectedCarRental = this.carRentals.find(carRental => carRental.name === newValue.target.value);
+      if(selectedCarRental)
+      {
+        this.carForm.patchValue({
+          carRentalDto: {
+            city: selectedCarRental.city,
+            street: selectedCarRental.street,
+            postalCode: selectedCarRental.postalCode,
+          },
+        })
+      }
+    }
+  }
+
   private UpdateForm(car:ICarDetail)
   {
     let carDetail = car;
@@ -110,12 +138,14 @@ export class CarDetailComponent implements OnInit {
           dailyPrice: carDetail.dailyPrice ,
           plates: carDetail.plates,
           carTypeDto: {
+            id:carDetail.carTypeDto.id,
             name: carDetail.carTypeDto.name,
             motor: carDetail.carTypeDto.motor,
             range: carDetail.carTypeDto.range,
             seats: carDetail.carTypeDto.seats,
           },
           carRentalDto: {
+            id:this.carDetail.carRentalDto.id,
             name: this.carDetail.carRentalDto.name,
             city: carDetail.carRentalDto.city,
             street: carDetail.carRentalDto.street,
