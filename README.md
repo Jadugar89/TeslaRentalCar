@@ -17,9 +17,9 @@
  
 
 ## Features
-List the ready features here:
-- Create reservation with sugestions.
-- Location of dropoff can be diffrent than pickup.
+List of ready-made features here:
+- Create a reservation with suggestions.
+- The return location may be different from the pickup location
 
 ## Setup
 Visual studio 2022 start server side. 
