@@ -81,7 +81,7 @@ namespace RentTeslaServerTests
                          Motor ="1020",
                          Range=396,
                          Seats=5,
-                         DailyPrice=51.40,
+                         DailyPrice=51.40m,
                          TotalCost=500
                     },
                      Reservation= new SearchDataDto()
@@ -105,7 +105,7 @@ namespace RentTeslaServerTests
                          Motor ="1020",
                          Range=396,
                          Seats=5,
-                         DailyPrice=51.40,
+                         DailyPrice=51.40m,
                          TotalCost=500
                     },
                      Reservation= new SearchDataDto()
@@ -133,7 +133,7 @@ namespace RentTeslaServerTests
                          Motor ="1020",
                          Range=396,
                          Seats=5,
-                         DailyPrice=51.40,
+                         DailyPrice=51.40m,
                          TotalCost=500
                     },
                      Reservation= new SearchDataDto()

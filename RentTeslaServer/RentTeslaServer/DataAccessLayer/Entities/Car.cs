@@ -5,7 +5,7 @@
         public int Id { get; set; }
         public bool IsPrepared { get; set; }
         public bool IsFree { get; set; }  
-        public double DailyPrice { get; set; }
+        public decimal DailyPrice { get; set; }
         public string Plates { get; set; }
 
         public int CarTypeId { get; set; }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Server.IIS.Core;
 using Microsoft.EntityFrameworkCore;
 using RentTeslaServer.DataAccessLayer;
 using RentTeslaServer.DataAccessLayer.Entities;
@@ -22,8 +23,13 @@ namespace RentTeslaServer.Services
             this.dbContext = dbContext;
         }
 
-        public async Task<IEnumerable<CarDto>> GetAllCarsInDataRange(SearchDataDto searchDataDto)
+        public async Task<IEnumerable<CarDto>> GetAllCarsInDataRange(string carrentalName, SearchDataDto searchDataDto)
         {
+            if (carrentalName != searchDataDto.NamePickUp)
+            {
+                throw new BadRequestException("carrentalName and NamePickUp are diffrent!");
+            }
+
             var cars = await dbContext.Cars.Where(x => (x.CarRental.Name == searchDataDto.NamePickUp || (x.Reservations.Any(c => c.ReturnLocation.Name == searchDataDto.NamePickUp))) && x.IsPrepared)
                 .Include(x => x.CarType)
                 .Include(x => x.Reservations)
@@ -71,7 +77,7 @@ namespace RentTeslaServer.Services
         }
         public async Task Created(CarManagmentCreatedDto carManagmentCreatedDto)
         {
-            if(await dbContext.Cars.AnyAsync(x => x.Plates == carManagmentCreatedDto.Plates))
+            if (await dbContext.Cars.AnyAsync(x => x.Plates == carManagmentCreatedDto.Plates))
             {
                 throw new BadRequestException("Plates has to be unique");
             }

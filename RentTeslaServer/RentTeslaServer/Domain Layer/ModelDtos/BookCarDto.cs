@@ -4,7 +4,7 @@ namespace RentTeslaServer.Domain_Layer.ModelDtos
 {
     public class BookCarDto : CarDto
     {
-        public double TotalCost { get; set; }
+        public decimal TotalCost { get; set; }
 
     }       
 }

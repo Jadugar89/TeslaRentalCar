@@ -36,8 +36,9 @@ namespace RentTeslaServer.Migrations
                     b.Property<int>("CarTypeId")
                         .HasColumnType("int");
 
-                    b.Property<double>("DailyPrice")
-                        .HasColumnType("float");
+                    b.Property<decimal>("DailyPrice")
+                        .HasPrecision(10, 2)
+                        .HasColumnType("decimal(10,2)");
 
                     b.Property<bool>("IsFree")
                         .HasColumnType("bit");
@@ -134,8 +135,9 @@ namespace RentTeslaServer.Migrations
                     b.Property<int>("CarId")
                         .HasColumnType("int");
 
-                    b.Property<double>("Cost")
-                        .HasColumnType("float");
+                    b.Property<decimal>("Cost")
+                        .HasPrecision(10, 2)
+                        .HasColumnType("decimal(10,2)");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -179,8 +181,9 @@ namespace RentTeslaServer.Migrations
                     b.Property<int>("CarId")
                         .HasColumnType("int");
 
-                    b.Property<double>("Cost")
-                        .HasColumnType("float");
+                    b.Property<decimal>("Cost")
+                        .HasPrecision(10, 2)
+                        .HasColumnType("decimal(10,2)");
 
                     b.Property<string>("Email")
                         .IsRequired()

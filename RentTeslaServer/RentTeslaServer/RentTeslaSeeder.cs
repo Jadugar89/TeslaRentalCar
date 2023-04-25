@@ -11,7 +11,7 @@ namespace RentTeslaServer
          class CarParameter
         {
            public int Type { get; set; }
-           public double Price { get; set; }
+           public decimal Price { get; set; }
            public string Plates { get; set; }
         }
 
@@ -96,12 +96,12 @@ namespace RentTeslaServer
                    IsActive=true,
                    Cars= GetCars(new List<CarParameter>()
                    {
-                       new CarParameter(){ Price=51.40,Type=1,Plates="AA123"},
-                       new CarParameter(){ Price=60,Type=2,Plates="AA223"},
-                       new CarParameter(){ Price=70,Type=3,Plates="AA124"},
-                       new CarParameter(){ Price=51.40,Type=1,Plates="AA243"},
-                       new CarParameter(){ Price=120,Type=5,Plates="AA623"},
-                       new CarParameter(){ Price=51.40,Type=1,Plates="AA903"},
+                       new CarParameter(){ Price=51.40m,Type=1,Plates="AA123"},
+                       new CarParameter(){ Price=60m,Type=2,Plates="AA223"},
+                       new CarParameter(){ Price=70m,Type=3,Plates="AA124"},
+                       new CarParameter(){ Price=51.40m,Type=1,Plates="AA243"},
+                       new CarParameter(){ Price=120m,Type=5,Plates="AA623"},
+                       new CarParameter(){ Price=51.40m,Type=1,Plates="AA903"},
                    })
                 },
                 new CarRental
@@ -113,13 +113,13 @@ namespace RentTeslaServer
                     IsActive=true,
                     Cars= GetCars(new List<CarParameter>()
                    {
-                       new CarParameter(){ Price=51.40,Type=1,Plates="AC123"},
-                       new CarParameter(){ Price=60,Type=2,Plates="AC223"},
-                       new CarParameter(){ Price=70,Type=3,Plates="AC323"},
-                       new CarParameter(){ Price=51.40,Type=1,Plates="AC723"},
-                       new CarParameter(){ Price=120,Type=5,Plates="AC246"},
-                       new CarParameter(){ Price=125,Type=6,Plates="AC453"},
-                       new CarParameter(){ Price=51.40,Type=1,Plates="AC523"},
+                       new CarParameter(){ Price=51.40m,Type=1,Plates="AC123"},
+                       new CarParameter(){ Price=60m,Type=2,Plates="AC223"},
+                       new CarParameter(){ Price=70m,Type=3,Plates="AC323"},
+                       new CarParameter(){ Price=51.40m,Type=1,Plates="AC723"},
+                       new CarParameter(){ Price=120m,Type=5,Plates="AC246"},
+                       new CarParameter(){ Price=125m,Type=6,Plates="AC453"},
+                       new CarParameter(){ Price=51.40m,Type=1,Plates="AC523"},
                    })
 
                 },
@@ -132,11 +132,11 @@ namespace RentTeslaServer
                     IsActive=true,
                     Cars= GetCars(new List<CarParameter>()
                    {
-                       new CarParameter(){ Price=51.40,Type=1,Plates="AD223"},
-                       new CarParameter(){ Price=60,Type=2,Plates="AD323"},
-                       new CarParameter(){ Price=60,Type=2,Plates="AD423"},
-                       new CarParameter(){ Price=51.40,Type=1,Plates="AD523"},
-                       new CarParameter(){ Price=51.40,Type=1,Plates="AD723"},
+                       new CarParameter(){ Price=51.40m,Type=1,Plates="AD223"},
+                       new CarParameter(){ Price=60m,Type=2,Plates="AD323"},
+                       new CarParameter(){ Price=60m,Type=2,Plates="AD423"},
+                       new CarParameter(){ Price=51.40m,Type=1,Plates="AD523"},
+                       new CarParameter(){ Price=51.40m,Type=1,Plates="AD723"},
                    })
                 },
                 new CarRental
@@ -148,11 +148,11 @@ namespace RentTeslaServer
                     IsActive=true,
                    Cars= GetCars(new List<CarParameter>()
                    {
-                       new CarParameter(){ Price=51.40,Type=1,Plates="AX123"},
-                       new CarParameter(){ Price=70,Type=3,Plates="AX143"},
-                       new CarParameter(){ Price=73,Type=4,Plates="AX124"},
-                       new CarParameter(){ Price=51.40,Type=1,Plates="AX543"},
-                       new CarParameter(){ Price=51.40,Type=1, Plates="AX746"},
+                       new CarParameter(){ Price=51.40m,Type=1,Plates="AX123"},
+                       new CarParameter(){ Price=70m,Type=3,Plates="AX143"},
+                       new CarParameter(){ Price=73m,Type=4,Plates="AX124"},
+                       new CarParameter(){ Price=51.40m,Type=1,Plates="AX543"},
+                       new CarParameter(){ Price=51.40m,Type=1, Plates="AX746"},
                    })
                 },
 
@@ -170,7 +170,7 @@ namespace RentTeslaServer
         }
 
 
-        private Car GetCar(double dailyPrice,int carType,string plates)
+        private Car GetCar(decimal dailyPrice,int carType,string plates)
         {
             return new Car
             {

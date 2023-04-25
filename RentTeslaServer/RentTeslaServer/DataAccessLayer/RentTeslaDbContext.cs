@@ -33,14 +33,14 @@ namespace RentTeslaServer.DataAccessLayer
                   .HasForeignKey(x => x.ReturnLocationId)
                   .OnDelete(DeleteBehavior.Restrict);
                 eb.HasIndex(x => x.Guid).IsUnique();
+                eb.Property(x => x.Cost).HasPrecision(10, 2);
             });
 
             modelBuilder.Entity<History>(eb =>
             {
                 eb.HasIndex(x => x.Guid).IsUnique();
+                eb.Property(x => x.Cost).HasPrecision(10, 2);
             });
-
-
 
             modelBuilder.Entity<Car>(eb =>
             {
@@ -49,6 +49,7 @@ namespace RentTeslaServer.DataAccessLayer
                 eb.HasOne(x => x.CarRental)
                   .WithMany(x => x.Cars).HasForeignKey(x => x.CarRentalId);
                 eb.HasIndex(x => x.Plates).IsUnique();
+                eb.Property(x=>x.DailyPrice).HasPrecision(10,2);
             });
 
             modelBuilder.Entity<CarRental>()

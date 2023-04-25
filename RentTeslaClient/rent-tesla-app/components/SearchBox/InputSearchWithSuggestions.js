@@ -8,7 +8,7 @@ const InputSearchWithSuggestions = (props) => {
     
     function handleLocalizationChange(event) {
  
-          props.handleNameChange(event);
+        props.handleNameChange(event);
             if(event.target.value.length>2)
             {
               setShowSuggestions(true);
@@ -17,7 +17,6 @@ const InputSearchWithSuggestions = (props) => {
             {
               setShowSuggestions(false);
             }
-          
       }
       function handleItemClick(event) {
         
@@ -46,6 +45,6 @@ const InputSearchWithSuggestions = (props) => {
             name={props.name}
             />)}
         </div>    
-)} 
-
+    )
+} 
 export default InputSearchWithSuggestions

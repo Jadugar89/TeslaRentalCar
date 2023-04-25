@@ -21,7 +21,7 @@ namespace RentTeslaServer.Domain_Layer.Validators
             RuleFor(x => x.Car.DailyPrice).NotEmpty().WithMessage("Daily price is required.")
                           .GreaterThan(0).WithMessage("Daily price must be greater than 0.");
             RuleFor(x => x.Car.TotalCost).NotEmpty().WithMessage("Total cost is required.")
-                                      .Equal(x => (x.Reservation.EndDate - x.Reservation.StartDate).TotalDays * x.Car.DailyPrice)
+                                      .Equal(x => ((decimal)(x.Reservation.EndDate - x.Reservation.StartDate).TotalDays) * x.Car.DailyPrice)
                                       .WithMessage("Total cost must be equal to (End date - Start date) * Daily price.");
         }
     }

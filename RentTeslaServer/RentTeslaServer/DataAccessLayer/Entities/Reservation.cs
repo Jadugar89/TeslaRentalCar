@@ -12,7 +12,7 @@
         public int ReturnLocationId { get; set; }
         public CarRental ReturnLocation { get; set; }
         public DateTime ReturnDate { get; set; }
-        public double Cost { get; set; }
+        public decimal Cost { get; set; }
         public string Email { get; set; }
        
         public int CarId { get; set; }

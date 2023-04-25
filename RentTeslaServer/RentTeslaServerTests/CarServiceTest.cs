@@ -39,9 +39,9 @@ namespace RentTeslaServerTests
 
         [Theory]
         [MemberData(nameof(ReservationData))]
-        public async Task GetCars(SearchDataDto searchDataDto)
+        public async Task GetCars(string name,SearchDataDto searchDataDto)
         {
-            var cars = await carService.GetAllCarsInDataRange(searchDataDto);
+            var cars = await carService.GetAllCarsInDataRange(name,searchDataDto);
             Assert.True(cars.Count()==4);
 
         }
@@ -51,6 +51,7 @@ namespace RentTeslaServerTests
 
             yield return new object[]
             {
+                     "Palma Airport",
                      new SearchDataDto()
                      {
                          NamePickUp="Palma Airport",

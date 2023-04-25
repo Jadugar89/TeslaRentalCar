@@ -1,6 +1,7 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using NLog.Web;
 using RentTeslaServer;
 using RentTeslaServer.DataAccessLayer;
@@ -37,13 +38,13 @@ builder.Services.AddAutoMapper(typeof(RentalCarMappingProfile));
 builder.Services.AddDbContext<RentTeslaDbContext>(options =>
                         options.UseSqlServer(
                         builder.Configuration.GetConnectionString("RentTeslaDbConnectionString")));
-
 builder.Services.AddCors(policy =>
 {
+    var allowedOrigins = builder.Configuration.GetSection("AllowedOrigins").Get<string[]>();
     policy.AddPolicy("FrondEndClient", options =>
-    options.AllowAnyMethod().AllowAnyHeader().AllowCredentials()
-    .WithOrigins(builder.Configuration["AllowedOrigins"]));
-
+                    options.AllowAnyMethod().AllowAnyHeader()
+                           .AllowCredentials()
+                           .WithOrigins(allowedOrigins));
 });
 builder.Host.UseNLog();
 

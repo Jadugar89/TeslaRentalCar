@@ -23,7 +23,7 @@ namespace RentTeslaServer.Controllers
         [HttpGet("carrental/{carrentalName}/car")]
         public async Task<IActionResult> GetCars([FromRoute] string carrentalName, [FromQuery] SearchDataDto searchDataDto)
         {
-           var result= await carService.GetAllCarsInDataRange(searchDataDto);
+           var result= await carService.GetAllCarsInDataRange(carrentalName,searchDataDto);
             return Ok(result);  
         }
         [HttpGet("car")]
