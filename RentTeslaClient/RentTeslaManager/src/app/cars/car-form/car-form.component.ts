@@ -39,10 +39,8 @@ export class CarFormComponent implements OnChanges{
     })
   });
 
-  constructor(private fb: FormBuilder){
-
-  }
-
+  constructor(private fb: FormBuilder){}
+  
   ngOnChanges(changes: SimpleChanges): void {
      const carChange = changes['carDetail'];
     if (carChange) {

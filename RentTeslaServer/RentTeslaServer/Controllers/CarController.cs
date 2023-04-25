@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RentTeslaServer.Domain_Layer.ModelDtos;
+using RentTeslaServer.Domain_Layer.Validators;
 using RentTeslaServer.Services;
 using System.Reflection.Metadata.Ecma335;
 
@@ -41,9 +42,15 @@ namespace RentTeslaServer.Controllers
 
         // POST api/<CarController>
         [HttpPost("car")]
-        public IActionResult Post([FromBody] CarManagmentDetailDto carManagmentDetailDto)
+        public async Task<IActionResult> Post([FromBody] CarManagmentCreatedDto carManagmentCreatedDto)
         {
-            var test = carManagmentDetailDto;
+            var validator = new CarManagmentCreatedDtoValidator();
+            var result = validator.Validate(carManagmentCreatedDto);
+            if (!result.IsValid)
+            {
+                return BadRequest(result.Errors);
+            }
+            await carService.Created(carManagmentCreatedDto);
             return Ok();
         }
 

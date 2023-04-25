@@ -48,6 +48,7 @@ namespace RentTeslaServer.DataAccessLayer
                   .WithMany(x => x.Cars).HasForeignKey(x => x.CarTypeId);
                 eb.HasOne(x => x.CarRental)
                   .WithMany(x => x.Cars).HasForeignKey(x => x.CarRentalId);
+                eb.HasIndex(x => x.Plates).IsUnique();
             });
 
             modelBuilder.Entity<CarRental>()

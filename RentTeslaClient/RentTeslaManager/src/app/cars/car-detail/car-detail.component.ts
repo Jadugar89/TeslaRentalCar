@@ -35,8 +35,6 @@ export class CarDetailComponent implements OnInit  {
    }
    carTypes:ICarType[]=[]
    carRentals:ICarRental[]=[]
-   
- 
 
   constructor(private route: ActivatedRoute, 
               private carService: CarService,
@@ -63,11 +61,8 @@ export class CarDetailComponent implements OnInit  {
     }
   }
   
-
   onSubmit(carDetail:ICarDetail) {
       this.carService.updateCarDetail(carDetail).subscribe(response => {
-        console.log(response);
-        console.log('Car details updated successfully!');
         this.toastr.success('Car details updated successfully', 'Update');
       }, error => {
         console.log('Error occurred while updating car details:', error);

@@ -27,6 +27,7 @@ namespace RentTeslaServer.Services
             var cars = await dbContext.Cars.Where(x => (x.CarRental.Name == searchDataDto.NamePickUp || (x.Reservations.Any(c => c.ReturnLocation.Name == searchDataDto.NamePickUp))) && x.IsPrepared)
                 .Include(x => x.CarType)
                 .Include(x => x.Reservations)
+                .AsNoTracking()
                 .ToListAsync();
 
             var carsReady = cars.Where(x => x.Reservations == null || x.Reservations.Count() == 0 ||
@@ -68,6 +69,18 @@ namespace RentTeslaServer.Services
             var carDto = mapper.Map<CarManagmentDetailDto>(car);
             return carDto;
         }
+        public async Task Created(CarManagmentCreatedDto carManagmentCreatedDto)
+        {
+            if(await dbContext.Cars.AnyAsync(x => x.Plates == carManagmentCreatedDto.Plates))
+            {
+                throw new BadRequestException("Plates has to be unique");
+            }
+
+            var car = mapper.Map<Car>(carManagmentCreatedDto);
+            await dbContext.AddAsync(car);
+            await dbContext.SaveChangesAsync();
+        }
+
         public async Task Update(int id, CarManagmentDetailDto carManagmentDetailDto)
         {
 
@@ -96,7 +109,6 @@ namespace RentTeslaServer.Services
 
             if (car is null)
                 throw new NotFoundException("Car not found");
-
 
             dbContext.Cars.Remove(car);
             dbContext.SaveChanges();

@@ -12,6 +12,7 @@ import { CarService } from './car.service';
 import { CarFormComponent } from './car-form/car-form.component'
 import { CarsRoutingModule } from './cars-routing.module';
 import { SharedModule } from '../shared/shared.module';
+import { AddCarComponent } from './add-car/add-car.component';
 
 
 
@@ -21,7 +22,8 @@ import { SharedModule } from '../shared/shared.module';
         CarListComponent,
         CarDetailComponent,
         CarsComponent,
-        CarFormComponent
+        CarFormComponent,
+        AddCarComponent
     ],
     exports: [CarsComponent],
     providers: [CarService],

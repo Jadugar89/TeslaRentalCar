@@ -20,10 +20,15 @@ namespace RentTeslaServer.Domain_Layer.ProfileMappings
 
             CreateMap<CarManagmentDetailDto, Car>();
                
-                
             CreateMap<CarDto, Car>();
-            CreateMap<CarType, CarTypeDto>();
-            CreateMap<CarRental, CarRentalDto>();
+
+            CreateMap<CarType, CarTypeDto>().ReverseMap();
+
+            CreateMap<CarRental, CarRentalDto>().ReverseMap();
+
+            CreateMap<CarManagmentCreatedDto, Car>()
+                .ForMember(m => m.CarTypeId, c => c.MapFrom(s => s.CarTypeDto.Id))
+                .ForMember(m => m.CarRentalId, c => c.MapFrom(s => s.CarRentalDto.Id));
 
             CreateMap<Car, CarManagmentDto>()
                 .ForMember(m => m.Name, c => c.MapFrom(s => s.CarType.Name))
@@ -37,6 +42,7 @@ namespace RentTeslaServer.Domain_Layer.ProfileMappings
                 .ForMember(m => m.Cost, x => x.MapFrom(s => s.Car.TotalCost));
             
             CreateMap<Reservation, SearchDataDto>();
+
             CreateMap<Reservation, History>()
                 .ForMember(m => m.PickUpLocation, x => x.MapFrom(s => s.PickUpLocation.Name))
                 .ForMember(m => m.ReturnLocation, x => x.MapFrom(s => s.ReturnLocation.Name))

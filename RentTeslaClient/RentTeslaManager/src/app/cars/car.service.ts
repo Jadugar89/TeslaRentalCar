@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { ICar, ICarDetail } from '../shared/models/interface';
+import { ICarCreatedDto } from './models/CarCreateDto';
 
 
 @Injectable({
@@ -46,8 +47,8 @@ export class CarService {
               return throwError(()=>err);
               })
             )}   
-          createCarDetail(carDetail: ICarDetail): Observable<ICarDetail>{
-            return this.http.post<ICarDetail>(this.baseUrl, carDetail,this.httpOptions)
+          createCarDetail(carDetail: ICarCreatedDto): Observable<ICarCreatedDto>{
+            return this.http.post<ICarCreatedDto>(this.baseUrl, carDetail,this.httpOptions)
             .pipe(
               catchError(err => {
               console.log('caught mapping error and rethrowing', err);

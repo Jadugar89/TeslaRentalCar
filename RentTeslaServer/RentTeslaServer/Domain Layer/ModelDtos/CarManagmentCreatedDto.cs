@@ -1,13 +1,8 @@
-﻿using Microsoft.Identity.Client;
-using RentTeslaServer.DataAccessLayer.Entities;
-using RentTeslaServer.Domain_Layer.Validators;
-
-namespace RentTeslaServer.Domain_Layer.ModelDtos
+﻿namespace RentTeslaServer.Domain_Layer.ModelDtos
 {
 
-    public class CarManagmentDetailDto
+    public class CarManagmentCreatedDto
     {
-        public int Id { get; set; }
         public bool IsPrepared { get; set; }
         public bool IsFree { get; set; }
         public double DailyPrice { get; set; }

@@ -31,8 +31,8 @@ builder.Services.AddScoped<ICarService, CarService>();
 builder.Services.AddScoped<ICarTypeService, CarTypeService>();
 builder.Services.AddScoped<IReservationService, ReservationService>();
 builder.Services.AddScoped<IPurgeReservationService,PurgeReservationService>();
-builder.Services.AddScoped<IValidator<ReservationCreateDto>, ReservationValidator>();
 
+builder.Services.AddValidatorsFromAssemblyContaining<ReservationValidator>();
 builder.Services.AddAutoMapper(typeof(RentalCarMappingProfile));
 builder.Services.AddDbContext<RentTeslaDbContext>(options =>
                         options.UseSqlServer(

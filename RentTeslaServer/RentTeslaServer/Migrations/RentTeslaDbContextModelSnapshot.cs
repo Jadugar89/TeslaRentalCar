@@ -47,13 +47,16 @@ namespace RentTeslaServer.Migrations
 
                     b.Property<string>("Plates")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CarRentalId");
 
                     b.HasIndex("CarTypeId");
+
+                    b.HasIndex("Plates")
+                        .IsUnique();
 
                     b.ToTable("Cars");
                 });

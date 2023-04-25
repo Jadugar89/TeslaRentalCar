@@ -12,7 +12,7 @@ using RentTeslaServer.DataAccessLayer;
 namespace RentTeslaServer.Migrations
 {
     [DbContext(typeof(RentTeslaDbContext))]
-    [Migration("20230416143532_AddPlates")]
+    [Migration("20230425093826_AddPlates")]
     partial class AddPlates
     {
         /// <inheritdoc />
@@ -50,13 +50,16 @@ namespace RentTeslaServer.Migrations
 
                     b.Property<string>("Plates")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CarRentalId");
 
                     b.HasIndex("CarTypeId");
+
+                    b.HasIndex("Plates")
+                        .IsUnique();
 
                     b.ToTable("Cars");
                 });

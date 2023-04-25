@@ -13,14 +13,24 @@ namespace RentTeslaServer.Migrations
             migrationBuilder.AddColumn<string>(
                 name: "Plates",
                 table: "Cars",
-                type: "nvarchar(max)",
+                type: "nvarchar(450)",
                 nullable: false,
                 defaultValue: "");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Cars_Plates",
+                table: "Cars",
+                column: "Plates",
+                unique: true);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropIndex(
+                name: "IX_Cars_Plates",
+                table: "Cars");
+
             migrationBuilder.DropColumn(
                 name: "Plates",
                 table: "Cars");
