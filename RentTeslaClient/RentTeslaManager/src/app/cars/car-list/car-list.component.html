@@ -1,20 +1,21 @@
 <div class="container-car-list">
-<h1 class="header">Cars</h1>
-
-<ul class="list-car">
-  <li class="list-car-item" *ngFor="let car of cars |paginate: { itemsPerPage: count, currentPage: p }" (click)="onSelect(car)">
-    <div class="list-car-detail">
-      <p class="list-car-detail-label">Plates: <span class="list-car-detail-span">{{ car.plates }}</span></p>
-      <p class="list-car-detail-label">Name: <span class="list-car-detail-span">{{ car.name }}</span></p>
-      <p class="list-car-detail-car-rental">Car Rental Details:</p>
-      <p class="list-car-detail-car-rental-label">Name: <span class="list-car-detail-span">{{ car.carRentalName }}</span> </p>
-      <p class="list-car-detail-car-rental-label">City: <span class="list-car-detail-span">{{ car.carRentalCity }}</span></p>
-    </div>
-  </li>
-</ul>
-
-<pagination-controls (pageChange)="p = $event"
-previousLabel="Prev"
-nextLabel="Next"
-></pagination-controls>
+  <ul class="list-car">
+    <li class="list-car-item" *ngFor="let car of cars   |paginate: { itemsPerPage: count, currentPage: p };  trackBy: trackByFn" 
+      (click)="onSelect(car)">
+      <div class="list-car-detail">
+        <p class="list-car-detail-label">Plates: <span class="list-car-detail-span">{{ car.plates }}</span></p>
+        <p class="list-car-detail-label">Name: <span class="list-car-detail-span">{{ car.name }}</span></p>
+        <p class="list-car-detail-car-rental">Car Rental Details:</p>
+        <p class="list-car-detail-car-rental-label">Name: <span class="list-car-detail-span">{{ car.carRentalName }}</span> </p>
+        <p class="list-car-detail-car-rental-label">City: <span class="list-car-detail-span">{{ car.carRentalCity }}</span></p>
+      </div>
+    </li>
+  </ul>
+  <div class="footer">
+    <pagination-controls (pageChange)="p = $event"
+    previousLabel="Prev"
+    nextLabel="Next"/>
+    <button>Add New Car</button>
+  </div>
 </div>
+

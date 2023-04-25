@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { ICar, ICarDetail } from '../shared/interface';
+import { ICar, ICarDetail } from '../shared/models/interface';
 
 
 @Injectable({
@@ -56,7 +56,12 @@ export class CarService {
             )}
 
             deleteCar(id: number) {
-              return this.http.delete(this.baseUrl+id);
+              return this.http.delete(this.baseUrl+id).pipe(
+                catchError(err => {
+                  console.log('caught mapping error and rethrowing', err);
+                  return throwError(()=>err);
+                  })
+              );
             }
 
           

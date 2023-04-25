@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ICarType } from './interface';
+import { ICarType } from '../models/interface';
 import { Observable, catchError, throwError } from 'rxjs';
 
 @Injectable({

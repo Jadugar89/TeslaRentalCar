@@ -1,0 +1,66 @@
+<div class="form-container">
+    <form [formGroup]="carForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label class="form-group-label" for="plates">Plates:</label>
+        <input class="form-group-input" type="text" id="plates" formControlName="plates">
+      </div>
+      <div class="form-group">
+        <label class="form-group-label" for="dailyPrice">Daily Price:</label>
+        <input class="form-group-input" type="text" id="dailyPrice" formControlName="dailyPrice">
+      </div>
+      <div class="form-group-checkbox">
+        <label class="form-group-label"  for="isPrepared">Is Prepared:</label>
+        <input class="form-group-input" type="checkbox" id="isPrepared" formControlName="isPrepared">
+      </div>
+        <div class="form-group-checkbox">
+          <label class="form-group-label" for="isFree">Is Free:</label>
+          <input class="form-group-input" type="checkbox" id="isFree" formControlName="isFree">
+        </div>
+      <div class="form-group" formGroupName="carTypeDto">
+        <div class="form-group-row">
+          <div class="form-group">
+            <label class="form-group-label" for="carTypeName">Car Type:</label>
+            <select class="form-group-input"  id="carTypeName" formControlName="name" (change)="onCarTypeChange($event)">
+              <option *ngFor="let carType of carTypes" [value]="carType.name">{{ carType.name }}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-group-label" for="carTypeMotor">Car Motor:</label>
+            <input class="form-group-input" type="text" id="carTypeMotor" formControlName="motor">
+          </div>
+        </div>
+        <div class="form-group-row">
+          <div class="form-group">
+            <label class="form-group-label" for="carTypeRange">Car Range:</label>
+            <input class="form-group-input" type="text" id="carTypeRange" formControlName="range">
+          </div>
+          <div class="form-group">
+            <label class="form-group-label" for="carTypeSeats">Car Seats:</label>
+            <input class="form-group-input" stype="text" id="carTypeSeats" formControlName="seats">
+          </div>
+        </div>
+      </div>
+      <div class="form-group" formGroupName="carRentalDto">
+        <div class="form-group">
+          <label class="form-group-label" for="carRentalName">Car Rental Name:</label>
+          <select class="form-group-input"  id="carRentalName" formControlName="name" (change)="onCarRentalChange($event)">
+            <option *ngFor="let carRental of carRentals" [value]="carRental.name">{{ carRental.name }}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-group-label" for="carRentalCity">Car Rental City:</label>
+          <input class="form-group-input" type="text" id="carRentalCity" formControlName="city">
+        </div>
+        <div class="form-group">
+          <label class="form-group-label" for="carRentalStreet">Car Rental Street:</label>
+          <input class="form-group-input" type="text" id="carRentalStreet" formControlName="street">
+        </div>
+        <div class="form-group">
+          <label class="form-group-label" for="carRentalPostalCode">Car Rental Postal Code:</label>
+          <input class="form-group-input" type="text" id="carRentalPostalCode" formControlName="postalCode">
+        </div>
+      </div>
+      <button class="form-group-button" type="submit" [disabled]="!carForm.valid">Save</button>
+      <button *ngIf="daleteBtnShow" class="form-group-button" type="button" (click)="OnDelete()" >Delete</button>
+    </form>
+  </div>

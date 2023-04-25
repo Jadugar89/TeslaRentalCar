@@ -1,2 +1,2 @@
-<p>cars works!</p>
-<app-car-list [cars]="cars"></app-car-list>
+<app-searchbox (searchString)="OnChange($event)"/>
+<app-car-list [cars]="filterCars"></app-car-list>

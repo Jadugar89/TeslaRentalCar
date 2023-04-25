@@ -1,6 +1,6 @@
 .container-car-list {
-    margin: 0 auto;
-    padding: 0 15px;
+    margin: 0;
+    padding: 15px;
   }
  .header {
     font-size: 28px;
@@ -49,4 +49,7 @@
   }
   .list-car-detail-span{
     font-weight: bold;
+  }
+  .footer{
+    display: flex;
   }
