@@ -13,7 +13,8 @@
 ## Technologies Used
 - Server Side Web Api-.Net 6
 - Database handle by EF Core.
-- Frond-End made ReactJs with Next.js
+- Client app made ReactJs with Next.js
+- Manager app made in Angular. 
  
 
 ## Features
@@ -22,7 +23,11 @@ List of ready-made features here:
 - The return location may be different from the pickup location
 
 ## Setup
-Visual studio 2022 start server side. 
-ReactJs start with "npm install".
-After this start project "npm start dev"
+Visual studio 2022 build and start server side. 
+
+Client app in ReactJs start with "npm install".
+After start project with command"npm start dev"
 Api url can be change in file next.config.js
+
+Manager- at first use command "npm install" 
+and then command "npm start" or "ng serve".
