@@ -1,13 +1,13 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using DomainLayer.ModelDtos;
+using DomainLayer.Validators;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using RentTeslaServer.Domain_Layer.ModelDtos;
-using RentTeslaServer.Domain_Layer.Validators;
-using RentTeslaServer.Services;
+using RentTeslaServer.DomainLayer.Contracts;
 using System.Reflection.Metadata.Ecma335;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace RentTeslaServer.Controllers
+namespace RentTeslaServer.Api
 {
     [Route("api/")]
     [ApiController]
@@ -23,8 +23,8 @@ namespace RentTeslaServer.Controllers
         [HttpGet("carrental/{carrentalName}/car")]
         public async Task<IActionResult> GetCars([FromRoute] string carrentalName, [FromQuery] SearchDataDto searchDataDto)
         {
-           var result= await carService.GetAllCarsInDataRange(carrentalName,searchDataDto);
-            return Ok(result);  
+            var result = await carService.GetAllCarsInDataRange(carrentalName, searchDataDto);
+            return Ok(result);
         }
         [HttpGet("car")]
         public async Task<IActionResult> GetCars()
@@ -66,8 +66,8 @@ namespace RentTeslaServer.Controllers
         [HttpDelete("car/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-           await carService.Delete(id);
-           return NoContent();
+            await carService.Delete(id);
+            return NoContent();
         }
     }
 }

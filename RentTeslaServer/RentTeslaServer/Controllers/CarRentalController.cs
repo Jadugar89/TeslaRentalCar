@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RentTeslaServer.Services;
+using RentTeslaServer.DomainLayer.Contracts;
+
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace RentTeslaServer.Controllers
+namespace RentTeslaServer.Api
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -15,8 +16,6 @@ namespace RentTeslaServer.Controllers
         {
             this.rentalCarService = rentalCarService;
         }
-
-
         // GET api/<CarRentalController>/5
         [HttpGet("{name}")]
         public async Task<IActionResult> Get(string name)

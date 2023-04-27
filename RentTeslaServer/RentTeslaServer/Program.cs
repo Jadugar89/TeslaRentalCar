@@ -1,51 +1,28 @@
+using DomainLayer.HostedServices;
+using DomainLayer.ProfileMappings;
+using DomainLayer.Validators;
 using FluentValidation;
-using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using NLog.Web;
 using RentTeslaServer;
 using RentTeslaServer.DataAccessLayer;
-using RentTeslaServer.Domain_Layer.HostedServices;
-using RentTeslaServer.Domain_Layer.ModelDtos;
-using RentTeslaServer.Domain_Layer.ProfileMappings;
-using RentTeslaServer.Domain_Layer.Services;
-using RentTeslaServer.Domain_Layer.Validators;
 using RentTeslaServer.Middleware;
-using RentTeslaServer.Services;
-using System;
+using RentTeslaServer.Service.Setup;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllers();
-
-
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddHostedService<PurgeReservationHostedService>();
-
-builder.Services.AddScoped<ErrorHandlingMiddleware>();
-builder.Services.AddScoped<IRentalCarService, RentalCarService>();
-builder.Services.AddScoped<ICarService, CarService>();
-builder.Services.AddScoped<ICarTypeService, CarTypeService>();
-builder.Services.AddScoped<IReservationService, ReservationService>();
-builder.Services.AddScoped<IPurgeReservationService,PurgeReservationService>();
-
+builder.Services.LoadServices();
+builder.Services.LoadHostServices();
+builder.Services.LoadRepository();
+builder.Services.ConfigureCors(builder.Configuration.GetSection("AllowedOrigins").Get<string[]>());
+builder.Services.ConfigureDatabase(builder.Configuration.GetConnectionString("RentTeslaDbConnectionString") ?? String.Empty);
+builder.Services.LoadMappingProfiles();
 builder.Services.AddValidatorsFromAssemblyContaining<ReservationValidator>();
-builder.Services.AddAutoMapper(typeof(RentalCarMappingProfile));
-builder.Services.AddDbContext<RentTeslaDbContext>(options =>
-                        options.UseSqlServer(
-                        builder.Configuration.GetConnectionString("RentTeslaDbConnectionString")));
-builder.Services.AddCors(policy =>
-{
-    var allowedOrigins = builder.Configuration.GetSection("AllowedOrigins").Get<string[]>();
-    policy.AddPolicy("FrondEndClient", options =>
-                    options.AllowAnyMethod().AllowAnyHeader()
-                           .AllowCredentials()
-                           .WithOrigins(allowedOrigins));
-});
+
 builder.Host.UseNLog();
 
 var app = builder.Build();
@@ -61,8 +38,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
-
-
 
 app.MapControllers();
 

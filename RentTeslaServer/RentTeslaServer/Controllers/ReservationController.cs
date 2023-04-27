@@ -1,15 +1,13 @@
-﻿using AutoMapper;
+﻿using DomainLayer.ModelDtos;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using RentTeslaServer.Domain_Layer.ModelDtos;
-using RentTeslaServer.Domain_Layer.Validators;
-using RentTeslaServer.Services;
+using RentTeslaServer.DomainLayer.Contracts;
 using System;
 
-namespace RentTeslaServer.Controllers
+namespace RentTeslaServer.Api
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -38,8 +36,8 @@ namespace RentTeslaServer.Controllers
                 throw new ValidationException(result.Errors);
             }
 
-            var resNumber= await reservationService.CreateReservation(reservationCreateDto);
-            
+            var resNumber = await reservationService.CreateReservation(reservationCreateDto);
+
             return Ok(resNumber);
         }
 

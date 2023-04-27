@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
+using DomainLayer.ModelDtos;
+using DomainLayer.ProfileMappings;
+using DomainLayer.Services;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.Extensions.Logging;
 using Moq;
 using RentTeslaServer.DataAccessLayer;
-using RentTeslaServer.Domain_Layer.ModelDtos;
-using RentTeslaServer.Domain_Layer.ProfileMappings;
-using RentTeslaServer.Domain_Layer.Services;
-using RentTeslaServer.Services;
+using RentTeslaServer.DataAccessLayer.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,7 +33,10 @@ namespace RentTeslaServerTests
 
             var loggerMock = new Mock<ILogger<CarService>>();
             var logger = loggerMock.Object;
-            carService = new CarService(logger, mapper, context);
+            var carRepository = new CarRepository(context);
+            var carRentalsRepository = new CarRentalRepository(context);
+            var carTypeRepository = new CarTypeRepository(context);
+            carService = new CarService(logger, mapper, carRepository, carTypeRepository,carRentalsRepository);
         }
        
 

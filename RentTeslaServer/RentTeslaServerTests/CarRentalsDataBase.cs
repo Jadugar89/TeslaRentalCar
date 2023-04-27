@@ -3,7 +3,6 @@ using Microsoft.Extensions.Options;
 using RentTeslaServer;
 using RentTeslaServer.DataAccessLayer;
 using RentTeslaServer.DataAccessLayer.Entities;
-using RentTeslaServer.Domain_Layer.ModelDtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;

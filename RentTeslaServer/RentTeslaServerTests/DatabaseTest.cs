@@ -1,16 +1,16 @@
 using Microsoft.EntityFrameworkCore;
 using RentTeslaServer.DataAccessLayer;
 using RentTeslaServer.DataAccessLayer.Entities;
-using RentTeslaServer.Domain_Layer.ModelDtos;
-using RentTeslaServer.Services;
 using Moq;
 using AutoMapper;
 using Microsoft.Extensions.Logging;
-using RentTeslaServer.Domain_Layer.ProfileMappings;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using RentTeslaServer.Exceptions;
-using RentTeslaServer.Domain_Layer.Services;
 using NLog;
+using DomainLayer.Services;
+using DomainLayer.ProfileMappings;
+using DomainLayer.ModelDtos;
+using RentTeslaServer.DataAccessLayer.Repository;
 
 namespace RentTeslaServerTests
 {
@@ -34,7 +34,10 @@ namespace RentTeslaServerTests
 
             var loggerMock = new Mock<ILogger<ReservationService>>();
             var logger = loggerMock.Object;
-            reservationService = new ReservationService(logger, mapper, context);
+            var reservationRepo = new ReservationRepository(context);
+            var carRepo = new CarRepository(context);
+            var carRentalsRepository = new CarRentalRepository(context);
+            reservationService = new ReservationService(logger, mapper, reservationRepo, carRentalsRepository, carRepo);
 
             var loggerPRMock = new Mock<ILogger<PurgeReservationService>>();
             var loggerPR = loggerPRMock.Object;

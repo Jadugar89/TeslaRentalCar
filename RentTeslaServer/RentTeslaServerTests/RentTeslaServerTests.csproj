@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RentTeslaServer\RentTeslaServer.csproj" />
+    <ProjectReference Include="..\RentTeslaServer\RentTeslaServer.Service.csproj" />
   </ItemGroup>
 
 </Project>

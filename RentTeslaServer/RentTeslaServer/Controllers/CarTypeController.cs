@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RentTeslaServer.DataAccessLayer;
-using RentTeslaServer.Domain_Layer.Services;
+using RentTeslaServer.DomainLayer.Contracts;
+
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace RentTeslaServer.Controllers
+namespace RentTeslaServer.Api
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -20,14 +20,14 @@ namespace RentTeslaServer.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var result  = await carTypeService.GetAll();
+            var result = await carTypeService.GetAll();
             return Ok(result);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var result= await carTypeService.GetById(id);
+            var result = await carTypeService.GetById(id);
             return Ok(result);
         }
         [HttpGet("name/{name}")]
