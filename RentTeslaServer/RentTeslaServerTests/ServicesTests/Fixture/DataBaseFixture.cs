@@ -9,18 +9,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RentTeslaServerTests
+namespace RentTeslaServerTests.ServicesTests.Fixture
 {
-    public class CarRentalsDataBase : IDisposable
+    public class DataBaseFixture : IDisposable
     {
-      
+
         public RentTeslaDbContext Context { get; private set; }
 
-        public CarRentalsDataBase()
+        public DataBaseFixture()
         {
-         var options = new DbContextOptionsBuilder<RentTeslaDbContext>()
-                .UseInMemoryDatabase(databaseName: "RentTeslaDb")
-                .Options;
+            var options = new DbContextOptionsBuilder<RentTeslaDbContext>()
+                   .UseInMemoryDatabase(databaseName: "RentTeslaDb")
+                   .Options;
 
             Context = new RentTeslaDbContext(options);
             new RentTeslaSeeder(Context).Seed();
@@ -36,8 +36,8 @@ namespace RentTeslaServerTests
                      CarId = 1,
                      Cost = 500,
                      Email = "First@wp.pl",
-                     PickUpDate=new DateTime(2023, 4, 1, 0, 0, 0),
-                     ReturnDate = new DateTime(2023, 4, 7, 0, 0, 0),
+                     PickUpDate= DateTime.Now.Subtract(TimeSpan.FromDays(10)),
+                     ReturnDate = DateTime.Now.Subtract(TimeSpan.FromDays(5)),
                      PickUpLocationId = 1,
                      ReturnLocationId = 1,
                 },
@@ -47,8 +47,8 @@ namespace RentTeslaServerTests
                      CarId = 1,
                      Cost = 500,
                      Email = "Jasiu@wp.pl",
-                     PickUpDate=new DateTime(2023, 4, 9, 0, 0, 0),
-                     ReturnDate = new DateTime(2023, 4, 15, 0, 0, 0),
+                     PickUpDate=DateTime.Now.AddDays(9),
+                     ReturnDate = DateTime.Now.AddDays(15),
                      PickUpLocationId = 1,
                      ReturnLocationId = 1,
                 },
@@ -58,8 +58,8 @@ namespace RentTeslaServerTests
                      CarId = 14,
                      Cost = 500,
                      Email = "sdsa@wp.pl",
-                     PickUpDate=new DateTime(2023, 4, 9, 0, 0, 0),
-                     ReturnDate = new DateTime(2023, 4, 15, 0, 0, 0),
+                     PickUpDate=DateTime.Now.AddDays(9),
+                     ReturnDate =DateTime.Now.AddDays(15),
                      PickUpLocationId = 3,
                      ReturnLocationId = 1,
                 }
@@ -67,7 +67,7 @@ namespace RentTeslaServerTests
 
 
             Context.Reservations.AddRange(reservations);
-            Context.SaveChanges();  
+            Context.SaveChanges();
         }
 
         public void Dispose()

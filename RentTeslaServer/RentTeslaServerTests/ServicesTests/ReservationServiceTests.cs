@@ -1,47 +1,44 @@
-using Microsoft.EntityFrameworkCore;
 using RentTeslaServer.DataAccessLayer;
-using RentTeslaServer.DataAccessLayer.Entities;
 using Moq;
 using AutoMapper;
 using Microsoft.Extensions.Logging;
-using Microsoft.AspNetCore.Cors.Infrastructure;
 using RentTeslaServer.Exceptions;
-using NLog;
 using DomainLayer.Services;
 using DomainLayer.ProfileMappings;
 using DomainLayer.ModelDtos;
 using RentTeslaServer.DataAccessLayer.Repository;
+using FluentAssertions;
+using RentTeslaServerTests.ServicesTests.Fixture;
 
-namespace RentTeslaServerTests
+namespace RentTeslaServerTests.ServicesTests
 {
-
-    public class DatabaseTest : IClassFixture<CarRentalsDataBase>
+    [Collection("Database collection")]
+    public class DatabaseTest
     {
-        private readonly RentTeslaDbContext context;
-        private readonly ReservationService reservationService;
-        private readonly PurgeReservationService purgeReservationService;
-        private readonly IMapper mapper;
+        private readonly RentTeslaDbContext _context;
+        private readonly ReservationService _reservationService;
+        private readonly PurgeReservationService _purgeReservationService;
+        private readonly IMapper _mapper;
 
 
-        public DatabaseTest(CarRentalsDataBase carRentalsDataBase)
+        public DatabaseTest(DataBaseFixture carRentalsDataBase)
         {
-            this.context = carRentalsDataBase.Context;
+            _context = carRentalsDataBase.Context;
             var mapperConfig = new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile(new RentalCarMappingProfile());
             });
-            mapper = mapperConfig.CreateMapper();
+            _mapper = mapperConfig.CreateMapper();
 
             var loggerMock = new Mock<ILogger<ReservationService>>();
-            var logger = loggerMock.Object;
-            var reservationRepo = new ReservationRepository(context);
-            var carRepo = new CarRepository(context);
-            var carRentalsRepository = new CarRentalRepository(context);
-            reservationService = new ReservationService(logger, mapper, reservationRepo, carRentalsRepository, carRepo);
+            var reservationRepo = new ReservationRepository(_context);
+            var carRepo = new CarRepository(_context);
+            var carRentalsRepository = new CarRentalRepository(_context);
+            _reservationService = new ReservationService(loggerMock.Object, _mapper, reservationRepo, carRentalsRepository, carRepo);
 
             var loggerPRMock = new Mock<ILogger<PurgeReservationService>>();
             var loggerPR = loggerPRMock.Object;
-            purgeReservationService = new PurgeReservationService(loggerPR, mapper, context);
+            _purgeReservationService = new PurgeReservationService(loggerPR, _mapper, _context);
 
 
         }
@@ -49,25 +46,30 @@ namespace RentTeslaServerTests
         [MemberData(nameof(ReservationData))]
         public async Task AddReservationAsync(ReservationCreateDto reservationCreateDto)
         {
-            var result = await reservationService.CreateReservation(reservationCreateDto);
-            Assert.True(result!=Guid.Empty);
+            var result = await _reservationService.CreateReservation(reservationCreateDto);
+            result.Should().NotBeEmpty();
         }
 
         [Theory]
         [MemberData(nameof(ExceptionData))]
         public async Task CheckException(ReservationCreateDto reservationCreateDto)
         {
-            var result = await Assert.ThrowsAsync<BadRequestException>(()=>  reservationService.CreateReservation(reservationCreateDto));
-            Assert.NotNull(result);
+            //act
+            Func<Task> act = _reservationService.Awaiting(y => y.CreateReservation(reservationCreateDto));
+            //assert
+            await act.Should().ThrowAsync<BadRequestException>()
+                        .WithMessage("The car for these dates is already booked!");
         }
         [Fact]
         public async Task CheckPurgeReservation()
         {
-            var expected = context.Reservations.Single(r => r.Email == "First@wp.pl");
-
-            await purgeReservationService.MoveToHistory();
-
-            Assert.DoesNotContain<Reservation>(expected, context.Reservations.ToList());
+            // Arrange
+            var expected = _context.Reservations.Single(r => r.Email == "First@wp.pl");
+            // Act
+            await _purgeReservationService.MoveToHistory();
+            // Assert
+            _context.Reservations.ToList().Should().NotContain(expected);
+            
         }
 
         public static IEnumerable<object[]> ExceptionData()
@@ -91,8 +93,8 @@ namespace RentTeslaServerTests
                      {
                          NamePickUp="Palma Airport",
                          NameDropOff ="Palma City Center",
-                         StartDate=new DateTime(2023, 4, 14, 0, 0, 0),
-                         EndDate=new DateTime(2023, 4,20, 0, 0, 0)
+                         StartDate=DateTime.Now.AddDays(14),
+                         EndDate=DateTime.Now.AddDays(20)
                      }
                },
             };
@@ -115,15 +117,15 @@ namespace RentTeslaServerTests
                      {
                          NamePickUp="Alcudia",
                          NameDropOff ="Palma Airport",
-                         StartDate=new DateTime(2023, 4, 9, 0, 0, 0),
-                         EndDate=new DateTime(2023, 4, 15, 0, 0, 0)
+                         StartDate=DateTime.Now.AddDays(9),
+                         EndDate=DateTime.Now.AddDays(15),
                      }
                },
           };
         }
-            public static IEnumerable<object[]> ReservationData()
-            {
-            
+        public static IEnumerable<object[]> ReservationData()
+        {
+
             yield return new object[]
             {
                new ReservationCreateDto()
@@ -143,8 +145,8 @@ namespace RentTeslaServerTests
                      {
                          NamePickUp="Palma Airport",
                          NameDropOff ="Palma Airport",
-                         StartDate=new DateTime(2023, 4, 22, 0, 0, 0),
-                         EndDate=new DateTime(2023, 4, 29, 0, 0, 0)
+                         StartDate=DateTime.Now.AddDays(22),
+                         EndDate=DateTime.Now.AddDays(29),
                      }
                },
             };
