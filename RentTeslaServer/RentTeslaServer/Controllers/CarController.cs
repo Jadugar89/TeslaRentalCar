@@ -1,11 +1,7 @@
 ﻿using DomainLayer.ModelDtos;
 using DomainLayer.Validators;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RentTeslaServer.DomainLayer.Contracts;
-using System.Reflection.Metadata.Ecma335;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace RentTeslaServer.Api
 {
@@ -13,34 +9,34 @@ namespace RentTeslaServer.Api
     [ApiController]
     public class CarController : ControllerBase
     {
-        private readonly ICarService carService;
+        private readonly ICarService _carService;
 
         public CarController(ICarService carService)
         {
-            this.carService = carService;
+            _carService = carService;
         }
-        // GET: api/<CarController>
-        [HttpGet("carrental/{carrentalName}/car")]
-        public async Task<IActionResult> GetCars([FromRoute] string carrentalName, [FromQuery] SearchDataDto searchDataDto)
+
+        [HttpGet("carrental/{carRentalName}/car")]
+        public async Task<IActionResult> GetCars([FromRoute] string carRentalName, [FromQuery] SearchDataDto searchDataDto)
         {
-            var result = await carService.GetAllCarsInDataRange(carrentalName, searchDataDto);
+            var result = await _carService.GetAllCarsInDataRange(carRentalName, searchDataDto);
             return Ok(result);
         }
+
         [HttpGet("car")]
         public async Task<IActionResult> GetCars()
         {
-            var result = await carService.GetAllCars();
+            var result = await _carService.GetAllCars();
             return Ok(result);
         }
 
         [HttpGet("car/{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            var result = await carService.GetById(id);
+            var result = await _carService.GetById(id);
             return Ok(result);
         }
 
-        // POST api/<CarController>
         [HttpPost("car")]
         public async Task<IActionResult> Post([FromBody] CarManagmentCreatedDto carManagmentCreatedDto)
         {
@@ -50,23 +46,21 @@ namespace RentTeslaServer.Api
             {
                 return BadRequest(result.Errors);
             }
-            await carService.Created(carManagmentCreatedDto);
+            await _carService.Created(carManagmentCreatedDto);
             return Ok();
         }
 
-        // PUT api/<CarController>/5
         [HttpPut("car/{id}")]
         public async Task<IActionResult> Put(int id, [FromBody] CarManagmentDetailDto carManagmentDetailDto)
         {
-            await carService.Update(id, carManagmentDetailDto);
+            await _carService.Update(id, carManagmentDetailDto);
             return NoContent();
         }
 
-        // DELETE api/<CarController>/5
         [HttpDelete("car/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            await carService.Delete(id);
+            await _carService.Delete(id);
             return NoContent();
         }
     }

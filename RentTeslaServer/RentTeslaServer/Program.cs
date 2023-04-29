@@ -19,7 +19,7 @@ builder.Services.LoadServices();
 builder.Services.LoadHostServices();
 builder.Services.LoadRepository();
 builder.Services.ConfigureCors(builder.Configuration.GetSection("AllowedOrigins").Get<string[]>());
-builder.Services.ConfigureDatabase(builder.Configuration.GetConnectionString("RentTeslaDbConnectionString") ?? String.Empty);
+builder.Services.ConfigureDatabase(builder.Configuration.GetConnectionString("RentTeslaDbConnectionString") ?? string.Empty);
 builder.Services.LoadMappingProfiles();
 builder.Services.AddValidatorsFromAssemblyContaining<ReservationValidator>();
 
@@ -27,7 +27,7 @@ builder.Host.UseNLog();
 
 var app = builder.Build();
 
-app.UseCors("FrondEndClient");
+app.UseCors("FrontEndClient");
 app.UseMiddleware<ErrorHandlingMiddleware>();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

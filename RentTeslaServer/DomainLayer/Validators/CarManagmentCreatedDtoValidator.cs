@@ -15,7 +15,7 @@ namespace DomainLayer.Validators
             RuleFor(x => x.DailyPrice).NotNull().WithMessage("DailyPrice is required.")
                 .GreaterThanOrEqualTo(0).WithMessage("DailyPrice must be greater than or equal to 0.");
 
-            RuleFor(x => x.Plates).NotEmpty().WithMessage("Plates is required.");
+            RuleFor(x => x.Plates).NotEmpty().WithMessage("Plates are required.");
 
             RuleFor(x => x.CarTypeDto).NotNull().WithMessage("CarTypeDto is required.")
                 .SetValidator(new CarTypeDtoValidator());

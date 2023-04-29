@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace DomainLayer.ModelDtos
+﻿namespace DomainLayer.ModelDtos
 {
     public class BookCarDto : CarDto
     {

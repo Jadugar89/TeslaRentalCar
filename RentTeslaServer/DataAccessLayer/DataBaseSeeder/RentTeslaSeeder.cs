@@ -12,31 +12,31 @@ namespace RentTeslaServer
         {
            public int Type { get; set; }
            public decimal Price { get; set; }
-           public string Plates { get; set; }
+           public string Plates { get; set; } = null!;
         }
 
-        private readonly RentTeslaDbContext dbContext;
+        private readonly RentTeslaDbContext _dbContext;
 
         public RentTeslaSeeder(RentTeslaDbContext dbContext)
         {
-            this.dbContext = dbContext;
+            _dbContext = dbContext;
         }
 
         public void Seed()
         {
-            if (dbContext.Database.CanConnect())
+            if (_dbContext.Database.CanConnect())
             {
-                if (!dbContext.CarRentals.Any())
+                if (!_dbContext.CarRentals.Any())
                 {
-                    dbContext.CarTypes.AddRange(GetTypes());
-                    dbContext.SaveChanges();
-                    dbContext.CarRentals.AddRange(GetCarRentals());
-                    dbContext.SaveChanges();
+                    _dbContext.CarTypes.AddRange(GetTypes());
+                    _dbContext.SaveChanges();
+                    _dbContext.CarRentals.AddRange(GetCarRentals());
+                    _dbContext.SaveChanges();
                 }
 
             }
         }
-        private List<CarType> GetTypes()
+        private static List<CarType> GetTypes()
         {
            return new List<CarType>()
             {
@@ -178,7 +178,7 @@ namespace RentTeslaServer
                 Plates = plates,
                 IsFree = true,
                 IsPrepared = true,
-                CarType = dbContext.CarTypes.Single(x => x.Id == carType),
+                CarType = _dbContext.CarTypes.Single(x => x.Id == carType),
 
             };
         }

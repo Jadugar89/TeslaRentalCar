@@ -9,26 +9,27 @@ namespace DomainLayer.Services
 {
     public class PurgeReservationService : IPurgeReservationService
     {
-        private readonly ILogger<PurgeReservationService> logger;
-        private readonly IMapper mapper;
-        private readonly RentTeslaDbContext dbContext;
+        private readonly ILogger<PurgeReservationService> _logger;
+        private readonly IMapper _mapper;
+        private readonly RentTeslaDbContext _dbContext;
 
         public PurgeReservationService(ILogger<PurgeReservationService> logger, IMapper mapper, RentTeslaDbContext dbContext)
         {
-            this.logger = logger;
-            this.mapper = mapper;
-            this.dbContext = dbContext;
+            _logger = logger;
+            _mapper = mapper;
+            _dbContext = dbContext;
         }
 
         public async Task MoveToHistory()
         {
+            _logger.LogInformation("Move to history");
             var threshold = DateTime.Now;
-            var recordsToDelete = await dbContext.Reservations.Where(x => x.ReturnDate < threshold).ToListAsync();
-            var recordsAddedToHistory = mapper.Map<IEnumerable<History>>(recordsToDelete);
+            var recordsToDelete = await _dbContext.Reservations.Where(x => x.ReturnDate < threshold).ToListAsync();
+            var recordsAddedToHistory = _mapper.Map<IEnumerable<History>>(recordsToDelete);
 
-            await dbContext.History.AddRangeAsync(recordsAddedToHistory);
-            dbContext.Reservations.RemoveRange(recordsToDelete);
-            await dbContext.SaveChangesAsync();
+            await _dbContext.History.AddRangeAsync(recordsAddedToHistory);
+            _dbContext.Reservations.RemoveRange(recordsToDelete);
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

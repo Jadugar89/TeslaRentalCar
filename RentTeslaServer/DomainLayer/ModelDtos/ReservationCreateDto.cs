@@ -5,8 +5,8 @@ namespace DomainLayer.ModelDtos
     public class ReservationCreateDto
     {
         [EmailAddress]
-        public string Email { get; set; }
-        public BookCarDto Car { get; set; }
-        public SearchDataDto Reservation { get; set; }
+        public string Email { get; set; } = null!;
+        public BookCarDto Car { get; set; } = null!;
+        public SearchDataDto Reservation { get; set; } = null!;
     }
 }

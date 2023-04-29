@@ -6,7 +6,7 @@
         {
             services.AddCors(policy =>
             {
-                policy.AddPolicy("FrondEndClient", options =>
+                policy.AddPolicy("FrontEndClient", options =>
                                 options.AllowAnyMethod().AllowAnyHeader()
                                        .AllowCredentials()
                                        .WithOrigins(allowedOrigins));

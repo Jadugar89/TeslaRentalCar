@@ -7,22 +7,22 @@ namespace DomainLayer.HostedServices
 {
     public class PurgeReservationHostedService : IHostedService, IDisposable
     {
-        private readonly ILogger<PurgeReservationHostedService> logger;
-        private readonly IServiceProvider services;
-        private Timer? timer = null;
+        private readonly ILogger<PurgeReservationHostedService> _logger;
+        private readonly IServiceProvider _services;
+        private Timer? _timer = null;
 
         public PurgeReservationHostedService(ILogger<PurgeReservationHostedService> logger,
                                              IServiceProvider services)
         {
-            this.logger = logger;
-            this.services = services;
+            _logger = logger;
+            _services = services;
         }
 
         public Task StartAsync(CancellationToken stoppingToken)
         {
-            logger.LogInformation("Purge Reservation Service running.");
+            _logger.LogInformation("Purge Reservation Service running.");
 
-            timer = new Timer(DoWork, null, TimeSpan.Zero,
+            _timer = new Timer(DoWork, null, TimeSpan.Zero,
                 TimeSpan.FromHours(1));
 
             return Task.CompletedTask;
@@ -30,28 +30,27 @@ namespace DomainLayer.HostedServices
 
         private void DoWork(object? state)
         {
-            logger.LogInformation(
+            _logger.LogInformation(
                 "Timed Hosted Service is working.");
 
-            var scope = services.CreateScope();
+            var scope = _services.CreateScope();
 
-            var purgeReservationService =
                 scope.ServiceProvider
                     .GetRequiredService<IPurgeReservationService>().MoveToHistory();
         }
 
         public Task StopAsync(CancellationToken stoppingToken)
         {
-            logger.LogInformation("Timed Hosted Service is stopping.");
+            _logger.LogInformation("Timed Hosted Service is stopping.");
 
-            timer?.Change(Timeout.Infinite, 0);
+            _timer?.Change(Timeout.Infinite, 0);
 
             return Task.CompletedTask;
         }
 
         public void Dispose()
         {
-            timer?.Dispose();
+            _timer?.Dispose();
         }
 
     }

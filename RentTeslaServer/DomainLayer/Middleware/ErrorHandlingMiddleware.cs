@@ -6,11 +6,11 @@ namespace RentTeslaServer.Middleware
 {
     public class ErrorHandlingMiddleware : IMiddleware
     {
-        private readonly ILogger<ErrorHandlingMiddleware> logger;
+        private readonly ILogger<ErrorHandlingMiddleware> _logger;
 
         public ErrorHandlingMiddleware(ILogger<ErrorHandlingMiddleware> logger)
         {
-            this.logger = logger;
+            _logger = logger;
         }
 
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
@@ -31,7 +31,7 @@ namespace RentTeslaServer.Middleware
             }
             catch(Exception e)
             {
-                logger.LogError(e,e.Message);
+                _logger.LogError(e.Message.ToString());
                 context.Response.StatusCode = 500;
                 await context.Response.WriteAsync("Internal Server Error");
 

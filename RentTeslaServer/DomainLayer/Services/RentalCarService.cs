@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
 using DomainLayer.ModelDtos;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using RentTeslaServer.DataAccessLayer;
 using RentTeslaServer.DataAccessLayer.Contracts;
 using RentTeslaServer.DomainLayer.Contracts;
 
@@ -10,26 +8,27 @@ namespace DomainLayer.Services
 {
     public class RentalCarService : IRentalCarService
     {
-        private readonly ILogger<RentalCarService> logger;
-        private readonly IMapper mapper;
-        private readonly ICarRentalRepository carRentalRepository;
+        private readonly ILogger<RentalCarService> _logger;
+        private readonly IMapper _mapper;
+        private readonly ICarRentalRepository _carRentalRepository;
 
         public RentalCarService(ILogger<RentalCarService> logger, IMapper mapper, ICarRentalRepository carRentalRepository)
         {
-            this.logger = logger;
-            this.mapper = mapper;
-            this.carRentalRepository = carRentalRepository;
+            _logger = logger;
+            _mapper = mapper;
+            _carRentalRepository = carRentalRepository;
         }
 
         public async Task<IEnumerable<string>> SearchLocalization(string name)
         {
-            return await carRentalRepository.GetLocalizationNameAsync(name);
+            _logger.LogInformation($"Get localizations for " + name);
+            return await _carRentalRepository.GetLocalizationNameAsync(name);
         }
 
         public async Task<IEnumerable<CarRentalDto>> GetAll()
         {
-            var carRentals = await carRentalRepository.GetAllCarRentalsAsync();
-            var carRentalsDto = mapper.Map<IEnumerable<CarRentalDto>>(carRentals);
+            var carRentals = await _carRentalRepository.GetAllCarRentalsAsync();
+            var carRentalsDto = _mapper.Map<IEnumerable<CarRentalDto>>(carRentals);
             return carRentalsDto;
         }
     }
