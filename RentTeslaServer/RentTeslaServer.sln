@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentTeslaServer.DataAccessL
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentTeslaServer.DomainLayer", "DomainLayer\RentTeslaServer.DomainLayer.csproj", "{C33991EC-8C74-4EA8-978B-4FC1437EF915}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentTeslaServer.Shared", "RentTeslaServer.Shared\RentTeslaServer.Shared.csproj", "{9843B6CF-1844-45F7-A4CE-557C5275465E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{C33991EC-8C74-4EA8-978B-4FC1437EF915}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C33991EC-8C74-4EA8-978B-4FC1437EF915}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C33991EC-8C74-4EA8-978B-4FC1437EF915}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9843B6CF-1844-45F7-A4CE-557C5275465E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9843B6CF-1844-45F7-A4CE-557C5275465E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9843B6CF-1844-45F7-A4CE-557C5275465E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9843B6CF-1844-45F7-A4CE-557C5275465E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -10,6 +10,7 @@ namespace RentTeslaServer.DataAccessLayer
         public DbSet<CarRental> CarRentals { get; set; }
         public DbSet<Car> Cars { get; set; }
         public DbSet<CarType> CarTypes { get; set; }
+        public DbSet<User> Users { get; set; }
 
         public RentTeslaDbContext(DbContextOptions<RentTeslaDbContext> options) : base(options)
         {

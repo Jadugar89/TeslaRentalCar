@@ -1,4 +1,5 @@
 ﻿using DomainLayer.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RentTeslaServer.DomainLayer.Contracts;
 
@@ -6,6 +7,7 @@ namespace RentTeslaServer.Api
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class CarTypeController : ControllerBase
     {
         private readonly ICarTypeService _carTypeService;

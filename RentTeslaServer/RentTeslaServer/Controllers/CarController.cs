@@ -1,5 +1,6 @@
 ﻿using DomainLayer.ModelDtos;
 using DomainLayer.Validators;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RentTeslaServer.DomainLayer.Contracts;
 
@@ -7,6 +8,7 @@ namespace RentTeslaServer.Api
 {
     [Route("api/")]
     [ApiController]
+    [Authorize]
     public class CarController : ControllerBase
     {
         private readonly ICarService _carService;
@@ -15,7 +17,7 @@ namespace RentTeslaServer.Api
         {
             _carService = carService;
         }
-
+        [AllowAnonymous]
         [HttpGet("carrental/{carRentalName}/car")]
         public async Task<IActionResult> GetCars([FromRoute] string carRentalName, [FromQuery] SearchDataDto searchDataDto)
         {

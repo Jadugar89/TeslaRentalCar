@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DataAccessLayer\RentTeslaServer.DataAccessLayer.csproj" />
+    <ProjectReference Include="..\RentTeslaServer.Shared\RentTeslaServer.Shared.csproj" />
   </ItemGroup>
 
 </Project>

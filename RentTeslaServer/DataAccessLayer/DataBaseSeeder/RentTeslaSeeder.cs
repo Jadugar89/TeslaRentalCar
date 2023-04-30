@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client.Extensibility;
 using RentTeslaServer.DataAccessLayer;
 using RentTeslaServer.DataAccessLayer.Entities;
@@ -31,10 +32,23 @@ namespace RentTeslaServer
                     _dbContext.CarTypes.AddRange(GetTypes());
                     _dbContext.SaveChanges();
                     _dbContext.CarRentals.AddRange(GetCarRentals());
+                    _dbContext.Users.AddRange(GetUsers());
                     _dbContext.SaveChanges();
                 }
 
             }
+        }
+        private static List<User> GetUsers()
+        {
+            return new List<User>()
+            {
+                new User() {
+                    Name = "Jasiu",
+                    LastName="Kowalski",
+                    Email= "Admin@wp.pl",
+                    PasswordHash=new PasswordHasher<User>().HashPassword(new User(),"admin")
+                }
+            };
         }
         private static List<CarType> GetTypes()
         {

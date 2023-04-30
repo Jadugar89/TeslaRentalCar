@@ -3,6 +3,7 @@ using DomainLayer.ProfileMappings;
 using DomainLayer.Validators;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using NLog.Web;
 using RentTeslaServer;
 using RentTeslaServer.DataAccessLayer;
@@ -14,7 +15,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.LoadAuth(builder.Configuration);
+builder.Services.LoadSwagger();
 builder.Services.LoadServices();
 builder.Services.LoadHostServices();
 builder.Services.LoadRepository();
@@ -29,6 +31,7 @@ var app = builder.Build();
 
 app.UseCors("FrontEndClient");
 app.UseMiddleware<ErrorHandlingMiddleware>();
+app.UseAuthentication();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
