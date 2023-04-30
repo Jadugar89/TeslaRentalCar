@@ -1,6 +1,6 @@
 import { ICarRental, ICarType } from "src/app/shared/models/interface";
 
-export interface ICarCreatedDto {
+export interface ICreatedCar {
     isPrepared: boolean;
     isFree: boolean;
     dailyPrice: number;

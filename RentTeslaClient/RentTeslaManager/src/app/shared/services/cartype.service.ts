@@ -1,18 +1,21 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ICarType } from '../models/interface';
 import { Observable, catchError, throwError } from 'rxjs';
+
+import { ICarType } from '../models/interface';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CarTypeService {
 
-  baseUrl: string = 'https://localhost:7236/api/cartype/';
+  baseUrl: string = environment.baseUrl +'/api/cartype/';
     
   constructor(private http: HttpClient) { }
 
     getCarTypes() : Observable<ICarType[]> {
+      console.log(this.baseUrl);
     return this.http.get<ICarType[]>(this.baseUrl)
         .pipe(
           catchError(err => {

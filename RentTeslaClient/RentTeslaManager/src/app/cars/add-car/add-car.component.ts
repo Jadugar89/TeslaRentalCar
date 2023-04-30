@@ -5,7 +5,7 @@ import { CarTypeService } from 'src/app/shared/services/cartype.service';
 import { CarrentalService } from 'src/app/shared/services/carrental.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
-import { ICarCreatedDto } from '../models/CarCreateDto';
+import { ICreatedCar } from '../models/create-car.model';
 
 @Component({
   selector: 'app-add-car',
@@ -32,7 +32,7 @@ export class AddCarComponent implements OnInit {
       })
     }
 
-  onSubmit(carDetail:ICarCreatedDto) {
+  onSubmit(carDetail:ICreatedCar) {
     this.carService.createCarDetail(carDetail).subscribe(response => {
       this.toastr.success('Car created successfully', 'Created');
       this.router.navigate(['/cars']);

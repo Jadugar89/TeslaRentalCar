@@ -3,7 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { ICar, ICarDetail } from '../shared/models/interface';
-import { ICarCreatedDto } from './models/CarCreateDto';
+import { ICreatedCar } from './models/create-car.model';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable({
@@ -11,59 +12,57 @@ import { ICarCreatedDto } from './models/CarCreateDto';
 })
 export class CarService {
 
-    baseUrl: string = 'https://localhost:7236/api/car/';
+    baseUrl: string =environment.baseUrl+'/api/car/';
     
     constructor(private http: HttpClient) { }
 
     httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type':  'application/json'
+        'Content-Type': 'application/json'
       })
     };
 
     getCars() : Observable<ICar[]> {
-        return this.http.get<ICar[]>(this.baseUrl)
-            .pipe(
-              catchError(err => {
-                console.log('Handling error locally and rethrowing it...', err);
-                return throwError(err);
-            })
-          )}
+      return this.http.get<ICar[]>(this.baseUrl)
+        .pipe(
+          catchError(err => {
+            console.log('Handling error locally and rethrowing it...', err);
+            return throwError(()=>err);
+      })
+    )}
 
-          getCar(id: number) : Observable<ICarDetail> {
-            return this.http.get<ICarDetail>(this.baseUrl +id)
-              .pipe(
-            catchError(err => {
+    getCar(id: number) : Observable<ICarDetail> {
+      return this.http.get<ICarDetail>(this.baseUrl +id)
+        .pipe(
+          catchError(err => {
             console.log('caught mapping error and rethrowing', err);
             return throwError(()=>err);
-            })
-              )}
+          })
+    )}
 
-          updateCarDetail(carDetail: ICarDetail): Observable<ICarDetail> {
-            return this.http.put<ICarDetail>(this.baseUrl +carDetail.id, carDetail,this.httpOptions)
-            .pipe(
-              catchError(err => {
-              console.log('caught mapping error and rethrowing', err);
-              return throwError(()=>err);
-              })
-            )}   
-          createCarDetail(carDetail: ICarCreatedDto): Observable<ICarCreatedDto>{
-            return this.http.post<ICarCreatedDto>(this.baseUrl, carDetail,this.httpOptions)
-            .pipe(
-              catchError(err => {
-              console.log('caught mapping error and rethrowing', err);
-              return throwError(()=>err);
-              })
-            )}
+    updateCarDetail(carDetail: ICarDetail): Observable<ICarDetail> {
+      return this.http.put<ICarDetail>(this.baseUrl +carDetail.id, carDetail,this.httpOptions)
+        .pipe(
+          catchError(err => {
+            console.log('caught mapping error and rethrowing', err);
+            return throwError(()=>err);
+      })
+    )}  
 
-            deleteCar(id: number) {
-              return this.http.delete(this.baseUrl+id).pipe(
-                catchError(err => {
-                  console.log('caught mapping error and rethrowing', err);
-                  return throwError(()=>err);
-                  })
-              );
-            }
+    createCarDetail(carDetail: ICreatedCar): Observable<ICreatedCar>{
+      return this.http.post<ICreatedCar>(this.baseUrl, carDetail,this.httpOptions)
+        .pipe(
+          catchError(err => {
+            console.log('caught mapping error and rethrowing', err);
+            return throwError(()=>err);
+      })
+    )}
 
-          
+    deleteCar(id: number) {
+      return this.http.delete(this.baseUrl+id).pipe(
+        catchError(err => {
+          console.log('caught mapping error and rethrowing', err);
+          return throwError(()=>err);
+          })
+    )}        
 }
