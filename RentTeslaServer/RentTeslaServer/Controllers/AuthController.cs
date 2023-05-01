@@ -6,7 +6,7 @@ using System.Text.Json;
 
 namespace RentTeslaServer.Service.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/auth")]
     [ApiController]
     public class AuthController : ControllerBase
     {

@@ -4,12 +4,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { CarsModule } from './cars/cars.module'
 import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { HeaderComponent } from './core/header/header.component';
 import { NavigationComponent } from './core/navigation/navigation.component';
 import { SharedModule } from './shared/shared.module';
 import { ToastrModule } from 'ngx-toastr';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AuthenticationModule } from './core/authentication/authentication.module';
+import { AuthInterceptor } from './core/interceptors/auth.interceptor';
+
 
 
 
@@ -23,6 +26,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    AuthenticationModule,
     SharedModule,
     CarsModule,
     ToastrModule.forRoot(),
@@ -31,7 +35,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     
   ],
 
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS, 
+    useClass: AuthInterceptor, 
+    multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
