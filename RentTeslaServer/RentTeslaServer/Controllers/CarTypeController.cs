@@ -18,6 +18,7 @@ namespace RentTeslaServer.Api
         }
 
         [HttpGet]
+        [ResponseCache(Duration = 1800)]
         public async Task<IActionResult> GetAll()
         {
             var result = await _carTypeService.GetAll();

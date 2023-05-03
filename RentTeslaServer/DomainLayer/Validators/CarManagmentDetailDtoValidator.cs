@@ -4,10 +4,12 @@ using FluentValidation.Results;
 
 namespace DomainLayer.Validators
 {
-    public class CarManagmentCreatedDtoValidator : AbstractValidator<CarManagmentCreatedDto>
+    public class CarManagmentDetailDtoValidator : AbstractValidator<CarManagmentDetailDto>
     {
-        public CarManagmentCreatedDtoValidator()
+        public CarManagmentDetailDtoValidator()
         {
+            RuleFor(x => x.Id).NotEmpty().WithMessage("Id is required.");
+
             RuleFor(x => x.IsPrepared).NotNull().WithMessage("IsPrepared is required.");
 
             RuleFor(x => x.IsFree).NotNull().WithMessage("IsFree is required.");

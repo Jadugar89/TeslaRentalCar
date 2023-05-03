@@ -18,6 +18,7 @@ namespace RentTeslaServer.Api
 
         [HttpGet("{name}")]
         [AllowAnonymous]
+        [ResponseCache(Duration = 1800)]
         public async Task<IActionResult> Get(string name)
         {
             var result = await _rentalCarService.SearchLocalization(name);
@@ -25,6 +26,7 @@ namespace RentTeslaServer.Api
         }
 
         [HttpGet]
+        [ResponseCache(Duration = 1800)]
         public async Task<IActionResult> GetAll()
         {
             var result = await _rentalCarService.GetAll();

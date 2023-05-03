@@ -24,7 +24,7 @@ builder.Services.ConfigureCors(builder.Configuration.GetSection("AllowedOrigins"
 builder.Services.ConfigureDatabase(builder.Configuration.GetConnectionString("RentTeslaDbConnectionString") ?? string.Empty);
 builder.Services.LoadMappingProfiles();
 builder.Services.AddValidatorsFromAssemblyContaining<ReservationValidator>();
-
+builder.Services.AddResponseCaching();
 builder.Host.UseNLog();
 
 var app = builder.Build();
@@ -41,7 +41,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
-
+app.UseResponseCaching();
 app.MapControllers();
 
 using (var scope = app.Services.CreateScope())
