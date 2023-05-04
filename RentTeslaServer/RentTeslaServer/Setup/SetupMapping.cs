@@ -11,6 +11,8 @@ namespace RentTeslaServer.Service.Setup
             {
                 cfg.AddProfile<CarMappingProfile>();
                 cfg.AddProfile<CarRentalMappingProfile>();
+                cfg.AddProfile<CarTypeMappingProfile>();
+                cfg.AddProfile<ReservationMappingProfile>();
             });
         }
     }
