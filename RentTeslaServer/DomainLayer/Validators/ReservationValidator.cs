@@ -1,6 +1,5 @@
-﻿using DomainLayer.ModelDtos;
+﻿using RentTeslaServer.DomainLayer.ModelDtos;
 using FluentValidation;
-using RentTeslaServer.DataAccessLayer.Entities;
 
 namespace DomainLayer.Validators
 {

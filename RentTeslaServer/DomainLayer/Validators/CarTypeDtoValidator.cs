@@ -1,4 +1,4 @@
-﻿using DomainLayer.ModelDtos;
+﻿using RentTeslaServer.DomainLayer.ModelDtos;
 using FluentValidation;
 
 namespace DomainLayer.Validators

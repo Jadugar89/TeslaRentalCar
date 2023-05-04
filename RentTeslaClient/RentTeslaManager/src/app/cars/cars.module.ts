@@ -1,10 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-
-import { NgxPaginationModule } from 'ngx-pagination';
-
-
 import { CarListComponent } from './car-list/car-list.component';
 import { CarDetailComponent } from './car-detail/car-detail.component';
 import { CarsComponent } from './cars/cars.component';
@@ -13,6 +9,7 @@ import { CarFormComponent } from './car-form/car-form.component'
 import { CarsRoutingModule } from './cars-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { AddCarComponent } from './add-car/add-car.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 
@@ -30,8 +27,8 @@ import { AddCarComponent } from './add-car/add-car.component';
     imports: [
         CommonModule,
         SharedModule,
-        NgxPaginationModule,
         ReactiveFormsModule,
+        NgxPaginationModule,
         CarsRoutingModule,
     ]
 })

@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 using RentTeslaServer.Exceptions;
 using DomainLayer.Services;
 using DomainLayer.ProfileMappings;
-using DomainLayer.ModelDtos;
+using RentTeslaServer.DomainLayer.ModelDtos;
 using RentTeslaServer.DataAccessLayer.Repository;
 using FluentAssertions;
 using RentTeslaServerTests.ServicesTests.Fixture;
@@ -26,7 +26,7 @@ namespace RentTeslaServerTests.ServicesTests
             _context = carRentalsDataBase.Context;
             var mapperConfig = new MapperConfiguration(cfg =>
             {
-                cfg.AddProfile(new RentalCarMappingProfile());
+                cfg.AddProfile(new CarMappingProfile());
             });
             _mapper = mapperConfig.CreateMapper();
 

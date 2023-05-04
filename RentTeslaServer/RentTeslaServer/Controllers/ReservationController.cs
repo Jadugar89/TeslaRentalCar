@@ -1,11 +1,8 @@
-﻿using DomainLayer.ModelDtos;
-using FluentValidation;
-using FluentValidation.AspNetCore;
+﻿using FluentValidation;
 using FluentValidation.Results;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RentTeslaServer.DomainLayer.Contracts;
-using System;
+using RentTeslaServer.DomainLayer.ModelDtos;
 
 namespace RentTeslaServer.Api
 {

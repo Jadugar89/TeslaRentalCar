@@ -1,4 +1,5 @@
 ﻿using DomainLayer.ProfileMappings;
+using RentTeslaServer.DomainLayer.ProfileMappings;
 
 namespace RentTeslaServer.Service.Setup
 {
@@ -6,7 +7,11 @@ namespace RentTeslaServer.Service.Setup
     {
         public static void LoadMappingProfiles(this IServiceCollection services)
         {
-            services.AddAutoMapper(typeof(RentalCarMappingProfile));
+            services.AddAutoMapper(cfg =>
+            {
+                cfg.AddProfile<CarMappingProfile>();
+                cfg.AddProfile<CarRentalMappingProfile>();
+            });
         }
     }
 }

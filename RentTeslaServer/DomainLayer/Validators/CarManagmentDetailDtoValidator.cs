@@ -1,6 +1,5 @@
-﻿using DomainLayer.ModelDtos;
+﻿using RentTeslaServer.DomainLayer.ModelDtos;
 using FluentValidation;
-using FluentValidation.Results;
 
 namespace DomainLayer.Validators
 {
@@ -15,7 +14,7 @@ namespace DomainLayer.Validators
             RuleFor(x => x.IsFree).NotNull().WithMessage("IsFree is required.");
 
             RuleFor(x => x.DailyPrice).NotNull().WithMessage("DailyPrice is required.")
-                .GreaterThanOrEqualTo(0).WithMessage("DailyPrice must be greater than or equal to 0.");
+                .GreaterThan(0).WithMessage("DailyPrice must be greater than or equal to 0.");
 
             RuleFor(x => x.Plates).NotEmpty().WithMessage("Plates are required.");
 

@@ -1,0 +1,13 @@
+<div class="car-rental-detail-container">
+    <div class="car-rental-detail-container-form" *ngIf="carRental">
+      <app-car-rental-form
+       [carRental]="carRental"
+       [daleteBtnShow]=true
+       (submitEvent)="onSubmit($event)"
+       (carDeleteEvent)="onDelete($event)"
+      />
+    </div>
+    <div>
+      <button class="button-red" routerLink="/rentalcars">Back</button>
+    </div>
+  </div>

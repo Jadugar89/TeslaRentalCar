@@ -3,6 +3,7 @@
       <h3 class='nav-text'>Rental Tesla Cars Management</h3>
       <li class="nav-item">
       <a *ngIf="isRouteActive('/cars')"  class="nav-link" routerLink="/addcar">Add Car</a>
+      <a *ngIf="isRouteActive('/rentalcars')"  class="nav-link" routerLink="/addrentalcar">Add Car Rental</a>
       </li>
       <li class="nav-item">
         <button type="button"  *ngIf="this.isAuthenticated" class="nav-link-button" (click)="logout()">

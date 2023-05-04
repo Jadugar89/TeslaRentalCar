@@ -20,6 +20,6 @@ export class CarListComponent  {
   }
 
   trackByFn(index:number,car:ICar) {    
-    return car.id; // unique id corresponding to the item
+    return car.id; 
  }
 }

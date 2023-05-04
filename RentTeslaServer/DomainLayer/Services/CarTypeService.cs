@@ -1,6 +1,6 @@
-﻿using AutoMapper;
-using DomainLayer.ModelDtos;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
+using AutoMapper;
+using RentTeslaServer.DomainLayer.ModelDtos;
 using RentTeslaServer.DataAccessLayer.Contracts;
 using RentTeslaServer.DomainLayer.Contracts;
 using RentTeslaServer.Exceptions;

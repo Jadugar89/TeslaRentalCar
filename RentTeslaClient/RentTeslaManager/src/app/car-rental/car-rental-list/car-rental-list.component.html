@@ -1,0 +1,16 @@
+<div class="container-car-rental-list">
+    <ul class="list-car-rental">
+      <li class="list-car-rental-item" *ngFor="let carRental of carRentals   |paginate: { itemsPerPage: count, currentPage: p };  trackBy: trackByFn" 
+        (click)="onSelect(carRental)">
+        <div class="list-car-rental-detail">
+          <p class="list-car-rental-detail-label">Name: <span class="list-car-rental-detail-span">{{ carRental.name }}</span></p>
+          <p class="list-car-rental-detail-label">City: <span class="list-car-rental-detail-span">{{ carRental.city }}</span></p>
+        </div>
+      </li>
+    </ul>
+    <div class="footer">
+      <pagination-controls (pageChange)="p = $event"
+      previousLabel="Prev"
+      nextLabel="Next"/>
+    </div>
+  </div>

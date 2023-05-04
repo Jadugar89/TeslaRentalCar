@@ -47,7 +47,7 @@ namespace RentTeslaServer.DataAccessLayer.Repository
 
         public async Task AddCarAsync(Car car)
         {
-            await _dbContext.AddAsync(car);
+            await _dbContext.Cars.AddAsync(car);
             await _dbContext.SaveChangesAsync();
         }
 

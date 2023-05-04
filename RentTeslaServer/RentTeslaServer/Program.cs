@@ -41,8 +41,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
-app.UseResponseCaching();
 app.MapControllers();
+app.UseResponseCaching();
 
 using (var scope = app.Services.CreateScope())
 {

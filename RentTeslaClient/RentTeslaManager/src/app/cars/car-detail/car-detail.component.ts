@@ -4,7 +4,8 @@ import { ICarDetail, ICarRental, ICarType } from '../../shared/models/interface'
 import { CarService } from '../car.service';
 import { CarTypeService } from '../../shared/services/cartype.service';
 import { ToastrService } from 'ngx-toastr';
-import { CarrentalService } from 'src/app/shared/services/carrental.service';
+import { CarRentalService } from 'src/app/car-rental/car-rental.service';
+
 
 @Component({
   selector: 'app-car-detail',
@@ -39,7 +40,7 @@ export class CarDetailComponent implements OnInit  {
   constructor(private route: ActivatedRoute, 
               private carService: CarService,
               private carTypesService: CarTypeService,
-              private carRentalService: CarrentalService,
+              private carRentalService: CarRentalService,
               private toastr: ToastrService,
               private router:Router) {}
 
@@ -48,7 +49,6 @@ export class CarDetailComponent implements OnInit  {
     if(id){
       this.carService.getCar(+id).subscribe((car: ICarDetail) => {
         this.car=car;
-        console.log(car);
       });
 
       this.carTypesService.getCarTypes().subscribe((carTypes:ICarType[])=>{
@@ -62,9 +62,9 @@ export class CarDetailComponent implements OnInit  {
   }
   
   onSubmit(carDetail:ICarDetail) {
-      this.carService.updateCarDetail(carDetail).subscribe(response => {
+      this.carService.updateCarDetail(carDetail).subscribe((response) => {
         this.toastr.success('Car details updated successfully', 'Update');
-      }, error => {
+      },error => {
         console.log('Error occurred while updating car details:', error);
         this.toastr.error('Error occurred while updating car details:', 'Update');
       });

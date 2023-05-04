@@ -12,7 +12,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AuthenticationModule } from './core/authentication/authentication.module';
 import { AuthInterceptor } from './core/interceptors/auth.interceptor';
-
+import { CarRentalModule } from './car-rental/car-rental.module';
 
 
 
@@ -28,13 +28,12 @@ import { AuthInterceptor } from './core/interceptors/auth.interceptor';
     HttpClientModule,
     AuthenticationModule,
     SharedModule,
+    CarRentalModule,
     CarsModule,
     ToastrModule.forRoot(),
     AppRoutingModule,
     NgbModule,
-    
   ],
-
   providers: [{
     provide: HTTP_INTERCEPTORS, 
     useClass: AuthInterceptor, 

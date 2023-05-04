@@ -1,4 +1,4 @@
-﻿using DomainLayer.ModelDtos;
+﻿using RentTeslaServer.DomainLayer.ModelDtos;
 
 namespace RentTeslaServer.DomainLayer.Contracts
 {
@@ -8,4 +8,4 @@ namespace RentTeslaServer.DomainLayer.Contracts
         Task<CarTypeDto> GetById(int id);
         Task<CarTypeDto> GetByName(string name);
     }
-}
+}   

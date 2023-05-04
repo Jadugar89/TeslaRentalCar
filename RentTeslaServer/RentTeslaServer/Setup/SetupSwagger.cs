@@ -1,4 +1,6 @@
-﻿using Microsoft.OpenApi.Models;
+﻿using Microsoft.Extensions.Options;
+using Microsoft.OpenApi.Models;
+using System.Reflection;
 
 namespace RentTeslaServer.Service.Setup
 {
@@ -9,7 +11,14 @@ namespace RentTeslaServer.Service.Setup
 
             services.AddSwaggerGen(options =>
             {
-                options.AddSecurityDefinition(name: "Bearer", securityScheme: new OpenApiSecurityScheme
+                options.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "Car Rental Tesla  API",
+                    Description = "An ASP.NET Core Web API for managing Car Rental Tesla"
+                });
+
+                    options.AddSecurityDefinition(name: "Bearer", securityScheme: new OpenApiSecurityScheme
                 {
                     Name = "Authorization",
                     Description = "Enter the Bearer Authorization string as following: `Bearer Generated-JWT-Token`",
@@ -35,6 +44,10 @@ namespace RentTeslaServer.Service.Setup
                         new List<string>()
                     }
                 });
+           
+            // using System.Reflection;
+            var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+            options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
             });
         }
     }

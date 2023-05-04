@@ -1,0 +1,22 @@
+<div class="form-container">
+    <form [formGroup]="carRentalForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label class="form-group-label" for="name">Name:</label>
+        <input class="form-group-input" type="text" id="name" formControlName="name">
+      </div>
+      <div class="form-group">
+        <label class="form-group-label" for="city">City:</label>
+        <input class="form-group-input" type="text" id="city" formControlName="city">
+      </div>
+      <div class="form-group">
+        <label class="form-group-label" for="street">Street:</label>
+        <input class="form-group-input" type="text" id="street" formControlName="street">
+      </div>
+      <div class="form-group">
+        <label class="form-group-label" for="postalCode">Postal Code:</label>
+        <input class="form-group-input" type="text" id="postalCode" formControlName="postalCode">
+      </div>
+      <button class="form-group-button" type="submit" [disabled]="!carRentalForm.valid">Save</button>
+      <button *ngIf="daleteBtnShow" class="form-group-button" type="button" (click)="OnDelete()" >Delete</button>
+    </form>
+  </div>

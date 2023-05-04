@@ -30,12 +30,34 @@ namespace RentTeslaServer.DataAccessLayer.Repository
 
         public async Task<CarRental?> GetCarRentalByNameAsync(string name)
         {
-           return await _dbContext.CarRentals.FirstOrDefaultAsync(x => x.Name == name);
+            return await _dbContext.CarRentals.FirstOrDefaultAsync(x => x.Name == name);
         }
 
         public async Task<CarRental?> GetCarRentalByIdAsync(int id)
         {
             return await _dbContext.CarRentals.FirstOrDefaultAsync(x => x.Id == id);
         }
+        public async Task<bool> CheckName(string name)
+        {
+            return await _dbContext.CarRentals.AnyAsync(x => x.Name == name);
+        }
+        public async Task AddCarRentalAsync(CarRental carRental)
+        {
+            await _dbContext.CarRentals.AddAsync(carRental);
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public void DeleteCarRental(CarRental carRental)
+        {
+            _dbContext.CarRentals.Remove(carRental);
+            _dbContext.SaveChanges();
+        }
+
+        public void UpdateCarRental(CarRental carRental)
+        {
+            _dbContext.CarRentals.Update(carRental);
+            _dbContext.SaveChanges();
+        }
+
     }
 }

@@ -26,7 +26,7 @@ namespace RentTeslaServerTests.ServicesTests
             _context = carRentalsDataBase.Context;
             var mapperConfig = new MapperConfiguration(cfg =>
             {
-                cfg.AddProfile(new RentalCarMappingProfile());
+                cfg.AddProfile(new CarMappingProfile());
             });
             mapper = mapperConfig.CreateMapper();
 

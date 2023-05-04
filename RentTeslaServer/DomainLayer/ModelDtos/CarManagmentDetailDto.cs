@@ -1,4 +1,4 @@
-﻿namespace DomainLayer.ModelDtos
+﻿namespace RentTeslaServer.DomainLayer.ModelDtos
 {
 
     public class CarManagmentDetailDto
