@@ -13,7 +13,7 @@ function SearchBoxSuggestion(props) {
   async function fetchData(name) {
     if(name)
     {
-      const response = await fetch(process.env.API_URL+`/api/CarRental/${name}`);
+      const response = await fetch(process.env.API_URL+`/api/CarRental/GetNames/${name}`);
       const newData = await response.json();
       setData(newData);
 

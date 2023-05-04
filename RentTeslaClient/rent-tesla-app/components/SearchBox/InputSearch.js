@@ -24,8 +24,7 @@ const InputSearch = (props) => {
                             name={props.name}  
                             value={props.value}
                             id={props.name}/>
-                )
-            } 
+            )} 
         </div>
     )
 }

@@ -23,19 +23,14 @@ export default function Home() {
           <Header></Header>
       <main className={styles.main}>
        <SearchBox
-        getFeedback={getFeedback}
-       />
+        getFeedback={getFeedback}/>
        { 
-       cars.length>0 &&( 
+        cars.length>0 &&( 
        <CarsDisplay
         reservation={reservation}
-        cars={cars}
-       />)
-       }
-      
-
+        cars={cars}/>
+        )}
       </main>
-
       <footer className='footer'>
         Powered by Next.js
       </footer>

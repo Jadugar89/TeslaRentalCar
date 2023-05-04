@@ -56,7 +56,7 @@ const SearchBox = (props) => {
 
               const queryString = new URLSearchParams(formDataDto);
 
-              const response = await fetch(process.env.API_URL+`/api/carrental/${formDataDto.namePickUp}/car?${queryString}`,);
+              const response = await fetch(process.env.API_URL+`/api/car/carsInDataRange/${formDataDto.namePickUp}?${queryString}`,);
               const cars = await response.json();
               let data={};
               data.cars=cars;

@@ -7,8 +7,7 @@ const CheckBox = (props) => {
             id={props.name}
             type="checkbox"
             checked={props.value}
-            onChange={props.handleCheckboxChange}
-            />
+            onChange={props.handleCheckboxChange}/>
             <label>{props.label}</label>
         </div>
         )
